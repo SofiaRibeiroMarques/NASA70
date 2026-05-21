@@ -502,7 +502,7 @@ svg#solar {
 }
 
 .drawer-projects-grid .project-card {
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
   height: 280px;
@@ -708,12 +708,12 @@ svg#solar {
   transition: border-color 0.2s, background 0.2s;
   text-decoration: none;
   display: block;
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
 }
 
 .project-card:hover {
-  border-color: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.05);
 }
 
