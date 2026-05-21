@@ -572,6 +572,7 @@ svg#solar {
 }
 
 .random-project-btn {
+    text-transform: none;
   display: inline-block;
   background: none;
   border: 0.5px solid var(--border-hover);
@@ -583,6 +584,8 @@ svg#solar {
   transition: all 0.2s;
   font-family: inherit;
   white-space: nowrap;
+
+
 }
 
 .random-project-btn:hover {

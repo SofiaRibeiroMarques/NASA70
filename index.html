@@ -56,11 +56,70 @@
     border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.05);
   }
+
+  /* Intro Page Styles */
+  #page-intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 1000;
+  }
+
+  .intro-content {
+    max-width: 540px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .intro-logo {
+    height: 120px;
+    width: auto;
+    margin-bottom: 8px;
+  }
+
+  .intro-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--fg-dim);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+
+  #enter-btn {
+    margin-top: 12px;
+    background: none;
+    border: 0.5px solid var(--border-hover);
+    color: var(--fg-dim);
+    padding: 8px 14px;
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  #enter-btn:hover {
+    background: white;
+    color: #000;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
 </style>
 </head>
 <body>
 
-<div id="page-map" class="page visible">
+<div id="page-intro" class="page visible">
+  <div class="intro-content">
+    <img class="intro-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
+    <p class="intro-text">For NASA's 70th anniversary, we have developed an archive of projects celebrating seven decades of space exploration and innovation.</p>
+    <button id="enter-btn">Enter Archive</button>
+  </div>
+</div>
+
+<div id="page-map" class="page hidden">
   <header class="site-header">
     <div class="site-header-left">
       <img id="site-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
@@ -223,7 +282,7 @@
         <input type="text" id="search-input" class="search-input" placeholder="search projects…" autocomplete="off">
         <div id="search-results" class="search-results"></div>
       </div>
-      <button class="random-project-btn">&#8594; random project</button>
+      <button class="random-project-btn">Random Project</button>
     </div>
   </header>
   <div class="list-intro"><span class="list-intro-label">Select a destination</span></div>
@@ -317,10 +376,10 @@ async function loadData(){
 }
 loadData();
 
-const pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list'),pagePlanet=document.getElementById('page-planet');
+const pageIntro=document.getElementById('page-intro'),pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list'),pagePlanet=document.getElementById('page-planet');
 
 function showView(id){
-  [pageMap,pageList,pagePlanet].forEach(p=>{
+  [pageIntro,pageMap,pageList,pagePlanet].forEach(p=>{
     p.classList.toggle('visible',p.id===id);
     p.classList.toggle('hidden',p.id!==id);
   });
@@ -370,6 +429,8 @@ function showPlanet(key,rowEl,forceOpen=false){
   });
   setTimeout(()=>drawer.classList.add('open'),10);
 }
+
+document.getElementById('enter-btn').addEventListener('click',()=>showView('page-map'));
 
 document.querySelectorAll('.planet-row[data-planet]').forEach(row=>{
   row.addEventListener('click',()=>showPlanet(row.dataset.planet,row));
