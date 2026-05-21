@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NASA 70</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Impedisce lo scrolling verticale solo nella pagina della mappa */
+  #page-map {
+    position: relative;
+    overflow: hidden;
+    overscroll-behavior: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Rimuove la linea di separazione (border-bottom) sotto il logo solo nella mappa */
+  #page-map .site-header {
+    border-bottom: none;
+  }
+
+  /* Assicura che i titoli abbiano la maiuscola iniziale */
+  .project-title, .search-item-title {
+    text-transform: none !important;
+  }
+  .project-title::first-letter, .search-item-title::first-letter {
+    text-transform: none !important;
+  }
+
+  /* Forza il cursore astronauta su ogni singolo elemento della pagina */
+  html, body, *, svg, .planet-hit, .random-project-btn, #reset-map-btn {
+    cursor: var(--cur) !important;
+  }
+
+  /* Stile per il bottone di reset sulla mappa */
+  #reset-map-btn {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(10, 9, 8, 0.6);
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 8px 14px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: none;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+  }
+
+  #reset-map-btn:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+  }
+</style>
+</head>
+<body>
+
+<div id="page-map" class="page visible">
+  <header class="site-header">
+    <div class="site-header-left">
+      <img id="site-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
+    </div>
+    <div class="site-header-right">
+      <button class="random-project-btn">Random Project</button>
+    </div>
+  </header>
+
+  <div class="map-container">
+    <svg id="solar" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" style="display: block; flex: 1; min-height: 0;">
+    <defs>
+      <radialGradient id="sg" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.14"/>
+        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <g id="viewport">
+      <rect width="1000" height="700" fill="#0a0908"/>
+      <g fill="#fff" id="background-stars">
+        <!-- Stelle di sfondo statiche -->
+        <circle cx="78" cy="95" r="0.5" opacity="0.35"/>
+        <circle cx="960" cy="200" r="0.5" opacity="0.35"/>
+        <circle cx="970" cy="320" r="0.5" opacity="0.35"/>
+        <circle cx="985" cy="480" r="0.6" opacity="0.35"/>
+        <circle cx="50" cy="580" r="0.5" opacity="0.4"/>
+        <circle cx="930" cy="610" r="0.6" opacity="0.35"/>
+        <circle cx="700" cy="12" r="0.6" opacity="0.4"/>
+        <circle cx="810" cy="130" r="0.4" opacity="0.35"/>
+        <circle cx="110" cy="505" r="0.4" opacity="0.35"/>
+        <circle cx="870" cy="540" r="0.5" opacity="0.35"/>
+        <circle cx="400" cy="50" r="0.4" opacity="0.3"/>
+        <circle cx="200" cy="650" r="0.5" opacity="0.38"/>
+        <circle cx="650" cy="680" r="0.6" opacity="0.42"/>
+        <circle cx="150" cy="150" r="0.4" opacity="0.33"/>
+        <circle cx="300" cy="400" r="0.3" opacity="0.25"/>
+        <circle cx="800" cy="100" r="0.4" opacity="0.37"/>
+        <circle cx="500" cy="600" r="0.5" opacity="0.41"/>
+        <circle cx="850" cy="350" r="0.4" opacity="0.36"/>
+        <circle cx="250" cy="50" r="0.3" opacity="0.29"/>
+        <circle cx="100" cy="300" r="0.4" opacity="0.34"/>
+        <circle cx="950" cy="40" r="0.3" opacity="0.28"/>
+        <circle cx="420" cy="500" r="0.4" opacity="0.39"/>
+        <circle cx="720" cy="650" r="0.5" opacity="0.43"/>
+        <circle cx="600" cy="150" r="0.4" opacity="0.31"/>
+      </g>
+
+      <g transform="translate(500,310)">
+        <!-- Orbite Concentriche -->
+        <circle r="80" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.25"/>
+        <circle r="120" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.25"/>
+        <circle r="170" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.25"/>
+        <circle r="220" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.2"/>
+        <circle r="290" fill="none" stroke="#fff" stroke-width="0.4" opacity="0.18"/>
+        <circle r="370" fill="none" stroke="#fff" stroke-width="0.4" opacity="0.15"/>
+        <circle r="460" fill="none" stroke="#fff" stroke-width="0.4" opacity="0.12"/>
+        <circle r="530" fill="none" stroke="#fff" stroke-width="0.4" opacity="0.1"/>
+
+        <!-- Sole Centrale -->
+        <g class="planet-hit" data-planet="sun">
+          <circle class="glow" r="65" fill="url(#sg)" opacity="0"/>
+          <circle class="ring" r="52" fill="none" stroke="#fff" stroke-width="1" opacity="0.88"/>
+          <g stroke="#fff" stroke-width="0.45" opacity="0.42">
+            <line x1="0" y1="-52" x2="0" y2="52"/><line x1="-52" y1="0" x2="52" y2="0"/>
+            <line x1="-36.8" y1="-36.8" x2="36.8" y2="36.8"/><line x1="36.8" y1="-36.8" x2="-36.8" y2="36.8"/>
+          </g>
+          <text x="0" y="-74" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" letter-spacing="0.01em" text-anchor="middle" opacity="0.4">Sun</text>
+        </g>
+
+        <!-- Pianeti riposizionati sulle orbite -->
+        <g class="planet-hit" data-planet="mercury" transform="translate(-80, 0)">
+          <circle class="glow" r="15" fill="#fff" opacity="0.04"/>
+          <circle class="ring" r="5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
+          <text x="0" y="-12" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Mercury</text>
+        </g>
+
+        <g class="planet-hit" data-planet="venus" transform="translate(85, -85)">
+          <circle class="glow" r="18" fill="#fff" opacity="0.04"/>
+          <circle class="ring" r="7" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
+          <text x="0" y="-16" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Venus</text>
+        </g>
+
+        <g class="planet-hit" data-planet="earth" transform="translate(-147, 85)">
+          <circle class="glow" r="20" fill="#fff" opacity="0.04"/>
+          <circle class="ring" r="6.5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.55"/>
+          <text x="16" y="4" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" opacity="0.4">Earth</text>
+        </g>
+
+        <g class="planet-hit" data-planet="moon" transform="translate(-132, 70)">
+          <circle class="glow" r="10" fill="#fff" opacity="0.04"/>
+          <circle class="ring" r="1.8" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.5"/>
+          <text x="6" y="1" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="7" opacity="0.4">Moon</text>
+        </g>
+
+        <g class="planet-hit" data-planet="satellites" transform="translate(-162, 63)">
+          <circle class="glow" r="8" fill="#fff" opacity="0.04"/>
+          <g transform="scale(0.35)">
+            <path d="M -2 -4 L 2 -4 L 2 4 L -2 4 Z M -11 -3 L -4 -3 L -4 3 L -11 3 Z M 4 -3 L 11 -3 L 11 3 L 4 3 Z M -4 0 L -2 0 M 2 0 L 4 0 M 0 -4 L 0 -7 M -1.5 -7 L 1.5 -7" fill="none" stroke="#fff" stroke-width="1.8" opacity="0.6"/>
+          </g>
+          <text x="0" y="15" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="7" letter-spacing="0.01em" text-anchor="middle" opacity="0.4">Satellites</text>
+        </g>
+
+        <g class="planet-hit" data-planet="mars" transform="translate(110, 190)">
+          <circle class="glow" r="16" fill="#fff" opacity="0.04"/>
+          <circle class="ring" r="5.5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
+          <text x="0" y="-14" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Mars</text>
+        </g>
+
+        <g class="planet-hit" data-planet="jupiter" transform="translate(205, -205)">
+          <circle class="glow" r="40" fill="#fff" opacity="0.03"/>
+          <circle class="ring" r="26" fill="none" stroke="#fff" stroke-width="1" opacity="0.82"/>
+          <text x="0" y="-36" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Jupiter</text>
+        </g>
+
+        <g class="planet-hit" data-planet="saturn" transform="translate(-364, 64)">
+          <circle class="glow" r="45" fill="#fff" opacity="0.03"/>
+          <circle class="ring" r="20" fill="none" stroke="#fff" stroke-width="1" opacity="0.82"/>
+          <ellipse rx="33" ry="9" fill="none" stroke="#fff" stroke-width="0.75" opacity="0.58"/>
+          <ellipse rx="39" ry="11" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.38"/>
+          <text x="0" y="-31" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Saturn</text>
+        </g>
+
+        <g class="planet-hit" data-planet="uranus" transform="translate(76, -453)">
+          <circle class="glow" r="25" fill="#fff" opacity="0.03"/>
+          <circle class="ring" r="13" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.72"/>
+          <text x="0" y="-24" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Uranus</text>
+        </g>
+
+        <g class="planet-hit" data-planet="neptune" transform="translate(-498, 181)">
+          <circle class="glow" r="25" fill="#fff" opacity="0.03"/>
+          <circle class="ring" r="12" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.68"/>
+          <text x="0" y="-22" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Neptune</text>
+        </g>
+      </g>
+    </g>
+  </svg>
+    <div class="map-top-nav">
+      <div class="sidebar-item" data-planet="solarsystem">Solar system <span>&#8594;</span></div>
+    </div>
+    <aside class="map-sidebar">
+      <div class="sidebar-label">Others</div>
+      <div class="sidebar-content">
+        <div class="sidebar-item" data-planet="deepspace">Deep space</div>
+        <div class="sidebar-item" data-planet="nebula">Stars</div>
+      </div>
+    </aside>
+  </div>
+  
+  <!-- NUOVO BOTTONE DI RESET INSERITO NELLA MAPPA -->
+  <button id="reset-map-btn">Reset View Map</button>
+</div>
+
+<div id="page-list" class="page hidden">
+  <header class="site-header">
+    <div class="site-header-left">
+      <img id="site-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
+    </div>
+    <div class="site-header-right">
+      <div class="search-wrap">
+        <input type="text" id="search-input" class="search-input" placeholder="search projects…" autocomplete="off">
+        <div id="search-results" class="search-results"></div>
+      </div>
+      <button class="random-project-btn">&#8594; random project</button>
+    </div>
+  </header>
+  <div class="list-intro"><span class="list-intro-label">Select a destination</span></div>
+
+  <div class="list-category">Solar System</div>
+  <div class="planet-row" data-planet="solarsystem"><span class="planet-row-index" style="font-size:13px">00</span><div><span class="planet-row-name">Solar System</span><span class="planet-row-sub">Milky Way &middot; Orion Arm</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="sun"><span class="planet-row-index">01</span><div><span class="planet-row-name">Sun</span><span class="planet-row-sub">Parent star &middot; system center</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="mercury"><span class="planet-row-index">02</span><div><span class="planet-row-name">Mercury</span><span class="planet-row-sub">Rocky planet &middot; first orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="venus"><span class="planet-row-index">03</span><div><span class="planet-row-name">Venus</span><span class="planet-row-sub">Rocky planet &middot; second orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="earth"><span class="planet-row-index">04</span><div><span class="planet-row-name">Earth</span><span class="planet-row-sub">Wandering planet &middot; third orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="moon"><span class="planet-row-index">05</span><div><span class="planet-row-name">Moon</span><span class="planet-row-sub">Natural satellite &middot; earth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="mars"><span class="planet-row-index">06</span><div><span class="planet-row-name">Mars</span><span class="planet-row-sub">Rocky planet &middot; fourth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="jupiter"><span class="planet-row-index">07</span><div><span class="planet-row-name">Jupiter</span><span class="planet-row-sub">Gas giant &middot; fifth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="saturn"><span class="planet-row-index">08</span><div><span class="planet-row-name">Saturn</span><span class="planet-row-sub">Gas giant &middot; sixth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="uranus"><span class="planet-row-index">09</span><div><span class="planet-row-name">Uranus</span><span class="planet-row-sub">Ice giant &middot; seventh orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="neptune"><span class="planet-row-index">10</span><div><span class="planet-row-name">Neptune</span><span class="planet-row-sub">Ice giant &middot; eighth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="satellites"><span class="planet-row-index" style="font-size:13px">11</span><div><span class="planet-row-name">Satellites</span><span class="planet-row-sub">Low earth orbit &middot; artificial network</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+
+  <div class="list-category">Beyond</div>
+  <div class="planet-row" data-planet="nebula"><span class="planet-row-index" style="font-size:13px">12</span><div><span class="planet-row-name">Stars</span><span class="planet-row-sub">Deep space &middot; nebula region</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="deepspace"><span class="planet-row-index" style="font-size:13px">13</span><div><span class="planet-row-name">Deep space</span><span class="planet-row-sub">Extra-solar regions &middot; exoplanets</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+</div>
+
+<div id="page-planet" class="page hidden">
+  <header class="site-header">
+    <div class="site-header-left">
+      <img id="site-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
+    </div>
+    <div class="site-header-right">
+      <div class="search-wrap">
+        <input type="text" id="search-input-planet" class="planet-search-input" placeholder="search projects…" autocomplete="off">
+        <div id="search-results-planet" class="search-results"></div>
+      </div>
+      <button class="random-project-btn">&#8594; Random Project</button>
+    </div>
+  </header>
+  <div id="planet-header">
+    <button id="back-btn">&#8592; back</button>
+    <div id="planet-title-block"><div id="planet-name">—</div></div>
+  </div>
+  <div id="projects-section">
+    <div class="filters-row">
+      <div class="filters-label">filters</div>
+      <div id="tags-container"><div id="tags-list"></div></div>
+    </div>
+    <div id="projects-label">Projects</div>
+    <div id="projects-grid"></div>
+  </div>
+</div>
+
+<script>
+const planets = {
+  solarsystem:{name:"Solar System",sub:"Milky Way · Orion Arm",desc:"Our planetary system, a collection of celestial bodies gravitationally bound to the Sun.",projects:[]},
+  sun:{name:"Sun",sub:"Parent star · system center",desc:"The star at the center of our solar system, the primary source of energy for life on Earth.",projects:[]},
+  mercury:{name:"Mercury",sub:"Rocky planet · first orbit",desc:"The smallest planet and closest to the Sun, with extreme temperatures and a cratered surface.",projects:[]},
+  venus:{name:"Venus",sub:"Rocky planet · second orbit",desc:"A rocky planet with a dense and toxic atmosphere, known for its extreme greenhouse effect.",projects:[]},
+  earth:{name:"Earth",sub:"Wandering planet · third orbit",desc:"The only known planet to host life, characterized by liquid oceans and an oxygen-rich atmosphere.",projects:[]},
+  moon:{name:"Moon",sub:"Natural satellite · earth orbit",desc:"Earth's only natural satellite, essential for stabilizing the Earth's axis of rotation and influencing tides.",projects:[]},
+  mars:{name:"Mars",sub:"Rocky planet · fourth orbit",desc:"The 'Red Planet', a subject of great interest in the search for extraterrestrial life and future human missions.",projects:[]},
+  jupiter:{name:"Jupiter",sub:"Gas giant · fifth orbit",desc:"The largest planet in the solar system, a gas giant with a Great Red Spot, a centuries-old storm.",projects:[]},
+  saturn:{name:"Saturn",sub:"Gas giant · sixth orbit",desc:"Famous for its spectacular rings, it is the second largest planet in the solar system.",projects:[]},
+  uranus:{name:"Uranus",sub:"Ice giant · seventh orbit",desc:"An ice giant with a unique axial tilt, causing it to 'roll' on its side.",projects:[]},
+  neptune:{name:"Neptune",sub:"Ice giant · eighth orbit",desc:"The farthest planet from the Sun, an ice giant with extremely strong winds and an intense blue color.",projects:[]},
+  nebula:{name:"Stars",sub:"Deep space · nebula region",desc:"Vast clouds of interstellar gas and dust where stars are born, or the remains of exploded stars.",projects:[]},
+  satellites:{name:"Satellites",sub:"Low earth orbit · artificial network",desc:"Artificial objects launched into orbit for purposes such as communication, Earth observation, and navigation.",projects:[]},
+  deepspace:{name:"Deep Space",sub:"Extra-solar regions · exoplanets",desc:"The vast and unexplored regions beyond our solar system, rich in galaxies, quasars, and black holes.",projects:[]},
+};
+
+async function loadData(){
+  try{
+    const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
+    data.forEach(p=>{
+      const proj={title:p.titolo,desc:p.descrizione,tag:p.autore,link:p.url,img:'immagini/'+(Array.isArray(p.immagine)?p.immagine[0]:p.immagine),tags:p.tags};
+      const a=p.autore;
+      const key=['Luca Mazzola'].includes(a)?'solarsystem':
+        a==='Michelle Chicherio'?'sun':
+        ['Riccardo Vosti','Claudio Ceppi','Melissa Broggini','Davide Barattini'].includes(a)?'earth':
+        ['Sofia Ribeiro Marques','Daniele Falcone'].includes(a)?'moon':
+        a==='Nahele Belli'?'mars':
+        a==='Alissa Bionda'?'nebula':
+        ['Carla De Gennaro','Laura Pantani'].includes(a)?'satellites':
+        a==='Djordja Krsteva'?'deepspace':null;
+      if(key&&planets[key])planets[key].projects.push(proj);
+    });
+    document.querySelectorAll('.planet-row[data-planet]').forEach(row=>{
+      const n=planets[row.dataset.planet]?.projects.length||0;
+      const dist=row.querySelector('.planet-row-dist');
+      if(dist)dist.textContent=n>0?(n===1?'1 project':`${n} projects`):'—';
+    });
+  }catch(e){console.error('Error loading data:',e)}
+}
+loadData();
+
+const pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list'),pagePlanet=document.getElementById('page-planet');
+
+function showView(id){
+  [pageMap,pageList,pagePlanet].forEach(p=>{
+    p.classList.toggle('visible',p.id===id);
+    p.classList.toggle('hidden',p.id!==id);
+  });
+}
+
+function showPlanet(key,rowEl,forceOpen=false){
+  document.querySelectorAll('.planet-drawer').forEach(d=>{if(d.previousElementSibling!==rowEl)d.classList.remove('open')});
+  if(pageList.classList.contains('hidden'))showView('page-list');
+  let drawer=rowEl.nextElementSibling;
+  if(!drawer||!drawer.classList.contains('planet-drawer')){
+    drawer=document.createElement('div');
+    drawer.className='planet-drawer';
+    rowEl.parentNode.insertBefore(drawer,rowEl.nextSibling);
+  }
+  if(drawer.classList.contains('open')&&!forceOpen){drawer.classList.remove('open');return}
+  const d=planets[key];
+  if(!d.projects.length)return;
+  drawer.innerHTML=`<div class="drawer-content">
+    <div class="drawer-side" id="side-info-${key}">
+      <div class="drawer-side-label">Project details</div>
+      <div class="side-placeholder" style="opacity:.3">Hover over a project to see details</div>
+    </div>
+    <div class="drawer-projects-grid">
+      ${d.projects.map(p=>`<div class="project-card" style="cursor:pointer">
+        ${p.img?`<img src="${p.img}" class="project-img" alt="${p.title}" loading="lazy">`:`<div class="project-img" style="background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,.1)">no image available</div>`}
+        <div class="project-content"><div class="project-tag">${p.tag}</div><div class="project-title">${p.title}</div><span class="project-arrow">&#8594;</span></div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+  const sidePanel=drawer.querySelector(`#side-info-${key}`);
+  drawer.querySelectorAll('.project-card').forEach((card,i)=>{
+    card.addEventListener('click',()=>{
+      drawer.querySelectorAll('.project-card').forEach(c=>c.classList.remove('active-card'));
+      card.classList.add('active-card');
+      const proj=d.projects[i];
+      sidePanel.style.opacity='0';
+      setTimeout(()=>{
+        sidePanel.style.transform=`translateY(${card.offsetTop-sidePanel.offsetTop}px)`;
+        sidePanel.innerHTML=`<div class="project-title" style="color:#fff;font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2">${proj.title}</div>
+          <div style="color:var(--fg-dim);font-size:11px;margin-bottom:12px">by <span class="project-author">${proj.tag}</span></div>
+          ${proj.tags?.length?`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px">${proj.tags.map(t=>`<span style="font-size:9px;color:var(--fg-faint);border:.5px solid var(--border);padding:3px 8px;text-transform:lowercase">${t}</span>`).join('')}</div>`:'<div style="margin-bottom:24px"></div>'}
+          <div style="color:var(--fg);opacity:.8;font-size:14px;max-width:420px;line-height:1.6">${proj.desc||'No description available for this project.'}</div>
+          <a href="${proj.link}" target="_blank" class="visit-btn">visit project</a>`;
+        sidePanel.style.opacity='1';
+      },100);
+    });
+  });
+  setTimeout(()=>drawer.classList.add('open'),10);
+}
+
+document.querySelectorAll('.planet-row[data-planet]').forEach(row=>{
+  row.addEventListener('click',()=>showPlanet(row.dataset.planet,row));
+});
+
+function getAllProjects(){
+  return Object.entries(planets).flatMap(([k,v])=>v.projects.map(p=>({...p,planetKey:k})));
+}
+
+document.querySelectorAll('.random-project-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const all=getAllProjects().filter(p=>p.link&&p.link!=='#'&&p.link!=='https://...');
+    if(all.length)window.open(all[Math.floor(Math.random()*all.length)].link,'_blank');
+  });
+});
+
+document.querySelectorAll('.planet-hit, .sidebar-item').forEach(el=>{
+  el.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    const key=el.dataset.planet;
+    const row=document.querySelector(`.planet-row[data-planet="${key}"]`);
+    showView('page-list');
+    setTimeout(()=>{if(row){row.scrollIntoView({behavior:'smooth',block:'start'});showPlanet(key,row,true)}},100);
+  });
+});
+
+document.querySelectorAll('#site-logo').forEach(logo=>logo.addEventListener('click',()=>showView('page-map')));
+
+function buildSearch(inputId,resultsId){
+  const input=document.getElementById(inputId),results=document.getElementById(resultsId);
+  if(!input||!results)return;
+  input.addEventListener('input',e=>{
+    const q=e.target.value.toLowerCase().trim();
+    if(q.length<2){results.classList.remove('visible');return}
+    const filtered=getAllProjects().filter(p=>
+      p.title.toLowerCase().includes(q)||p.tag.toLowerCase().includes(q)||
+      (p.desc&&p.desc.toLowerCase().includes(q))||(p.tags&&p.tags.some(t=>t.toLowerCase().includes(q)))
+    );
+    results.innerHTML=filtered.length
+      ?filtered.map(p=>`<div class="search-item" onclick="window.open('${p.link}','_blank')">
+          <div class="search-item-title">${p.title}</div>
+          <div class="search-item-meta">${p.tag} &middot; ${planets[p.planetKey].name}</div>
+          ${p.desc?`<div class="search-item-desc">${p.desc}</div>`:''}
+        </div>`).join('')
+      :'<div style="padding:12px;font-size:9px;color:rgba(255,255,255,.25);letter-spacing:.04em">no results</div>';
+    results.classList.add('visible');
+  });
+}
+buildSearch('search-input','search-results');
+buildSearch('search-input-planet','search-results-planet');
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.search-wrap'))
+    document.querySelectorAll('.search-results').forEach(r=>r.classList.remove('visible'));
+});
+
+// SISTEMA DI ZOOM & NAVIGAZIONE (MOUSE + TOUCH)
+(function() {
+  const s = document.getElementById('solar'), v = document.getElementById('viewport');
+  let sc = 1, tx = 0, ty = 0, isDragging = false, lx, ly, initialDist = 0;
+
+  const update = () => {
+    v.style.transform = `translate(${tx}px, ${ty}px) scale(${sc})`;
+  };
+
+  // Zoom con Rotellina
+  s.addEventListener('wheel', e => {
+    e.preventDefault();
+    const f = Math.pow(1.1, -e.deltaY / 100);
+    const nsc = Math.min(Math.max(sc * f, 0.3), 8);
+
+    // Usa le coordinate SVG del Sole (500, 310) come perno fisso per lo zoom
+    const px = 500, py = 310;
+    tx = px - (px - tx) * (nsc / sc);
+    ty = py - (py - ty) * (nsc / sc);
+
+    sc = nsc;
+    update();
+  }, { passive: false });
+
+  // Trascinamento con Mouse
+  s.addEventListener('mousedown', e => {
+    if (e.button !== 0 || e.target.closest('.planet-hit')) return;
+    isDragging = true; lx = e.clientX; ly = e.clientY;
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    tx += e.clientX - lx; ty += e.clientY - ly;
+    lx = e.clientX; ly = e.clientY;
+    update();
+  });
+
+  window.addEventListener('mouseup', () => { isDragging = false; });
+
+  // Supporto Touch (Pan e Pinch-to-Zoom)
+  s.addEventListener('touchstart', e => {
+    if (e.target.closest('.planet-hit')) return;
+    if (e.touches.length === 1) {
+      isDragging = true; lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+    } else if (e.touches.length === 2) {
+      initialDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+    }
+  }, { passive: false });
+
+  s.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (e.touches.length === 1 && isDragging) {
+      tx += e.touches[0].clientX - lx; ty += e.touches[0].clientY - ly;
+      lx = e.touches[0].clientX; ly = e.touches[0].clientY;
+      update();
+    } else if (e.touches.length === 2) {
+      const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      const f = dist / initialDist;
+      const nsc = Math.min(Math.max(sc * f, 0.3), 8);
+
+      // Centra lo zoom sul Sole anche durante il pinch-to-zoom su touch
+      const px = 500, py = 310;
+      tx = px - (px - tx) * (nsc / sc);
+      ty = py - (py - ty) * (nsc / sc);
+      
+      sc = nsc;
+      initialDist = dist;
+      update();
+    }
+  }, { passive: false });
+
+  s.addEventListener('touchend', () => { isDragging = false; });
+  
+  // Funzione di reset: imposta una scala che mostri tutti i pianeti e centra il Sole
+  const resetMap = () => {    
+    // Sun's SVG coordinates (relative to #viewport's origin)
+    const sunSvgX = 500;
+    const sunSvgY = 310;
+
+    sc = 0.7; // Scala leggermente aumentata per ingrandire la mappa
+    // Calculate tx, ty to center the Sun's SVG coordinates (sunSvgX, sunSvgY)
+    // at the center of the SVG element's viewBox (500, 350) after scaling.
+    tx = 500 - sunSvgX * sc;
+    ty = 350 - sunSvgY * sc; // 350 is the vertical center of the 700px viewBox
+    update();
+  };
+
+  document.getElementById('reset-map-btn')?.addEventListener('click', resetMap);
+  s.addEventListener('dblclick', resetMap);
+  
+  // Inizializza la mappa per mostrare tutti i pianeti all'avvio
+  setTimeout(resetMap, 100);
+})();
+</script>
+</body>
+</html>
