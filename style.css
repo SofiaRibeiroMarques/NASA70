@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
 /* --- VARIABLES & BASE --- */
 :root {
   --bg: #0a0908;
@@ -267,19 +265,41 @@ svg#solar {
 }
 
 #cd-timer {
-  font-size: 80px;
-  letter-spacing: 0.08em;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 15px;
+  font-size: 110px;
   color: #fff;
   line-height: 1;
   transition: color 0.3s;
 }
 
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cd-sep {
+  opacity: 0.5;
+  padding-bottom: 20px; /* Allinea il colone alla base dei numeri */
+}
+
+.cd-label-item {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
 #cd-timer.cd-urgent { color: #ffffff; }
-#cd-timer.cd-final { animation: cd-blink 0.5s step-end infinite; }
+#cd-timer.cd-final { animation: cd-blink 0.5s step-end infinite; color: #ff3b30; }
 
 @keyframes cd-blink {
-  0%,100% { color: #ff4422; opacity: 1; }
-  50%      { color: #ff4422; opacity: 0.25; }
+  0%,100% { color: #ff3b30; opacity: 1; }
+  50%      { color: #ff3b30; opacity: 0.25; }
 }
 
 #cd-status-msg {
@@ -571,7 +591,7 @@ svg#solar {
 
 .project-table-header {
   display: grid;
-  grid-template-columns: 1.5fr 1.2fr 2fr 40px;
+  grid-template-columns: 1.5fr 1.2fr 2fr 110px;
   gap: 32px;
   padding: 12px var(--spacing);
   font-size: 11px;
@@ -581,9 +601,13 @@ svg#solar {
   border-bottom: 0.5px solid var(--border);
 }
 
+.project-table-header div:last-child {
+  text-align: right;
+}
+
 .drawer-projects-grid .project-card {
   display: grid;
-  grid-template-columns: 1.5fr 1.2fr 2fr 40px;
+  grid-template-columns: 1.5fr 1.2fr 2fr 110px;
   align-items: start;
   gap: 32px;
   padding: 20px var(--spacing);
@@ -595,6 +619,10 @@ svg#solar {
   height: auto;
   text-decoration: none;
   color: inherit;
+}
+
+.drawer-projects-grid .project-card div:last-child {
+  text-align: right;
 }
 
 .project-list-row {
@@ -707,6 +735,7 @@ svg#solar {
   margin-top: 0; /* Rimosso margine perché gestito dal flex-gap */
   padding: 6px 14px;
   border: 0.5px solid var(--border-hover);
+  border-radius: 20px;
   color: var(--fg);
   text-decoration: none;
   font-size: 9px;
@@ -724,6 +753,7 @@ svg#solar {
   display: inline-block;
   background: none;
   border: 0.5px solid var(--border-hover);
+  border-radius: 20px;
   color: var(--fg-dim);
   font-size: 11px;
   letter-spacing: 0.05em;
@@ -753,6 +783,7 @@ svg#solar {
 #back-btn {
   background: none;
   border: 0.5px solid var(--border-hover);
+  border-radius: 20px;
   color: var(--fg-dim);
   font-size: 11px;
   letter-spacing: 0.05em;
@@ -821,6 +852,7 @@ svg#solar {
   transition: all 0.2s;
   padding: 5px 12px;
   border: 0.5px solid var(--border-hover);
+  border-radius: 20px;
   line-height: 1;
 }
 
@@ -932,11 +964,11 @@ svg#solar {
   width: 220px;
 }
 .visit-btn:hover{background:var(--fg);color:var(--bg)}
-.random-project-btn{display:inline-block;background:none;border:.5px solid var(--border-hover);color:var(--fg-dim);font-size:11px;letter-spacing:.05em;padding:8px 14px;cursor:var(--cur);transition:all .2s;font-family:inherit;text-transform:lowercase;white-space:nowrap}
+.random-project-btn{display:inline-block;background:none;border:.5px solid var(--border-hover);border-radius:20px;color:var(--fg-dim);font-size:11px;letter-spacing:.05em;padding:8px 14px;cursor:var(--cur);transition:all .2s;font-family:inherit;text-transform:lowercase;white-space:nowrap}
 .random-project-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
 
 #planet-header{padding:32px var(--spacing) 20px;border-bottom:.5px solid var(--border);display:flex;align-items:center;gap:24px}
-#back-btn{background:none;border:.5px solid var(--border-hover);color:var(--fg-dim);font-size:11px;letter-spacing:.05em;padding:8px 14px;flex-shrink:0;transition:all .2s;font-family:inherit;text-transform:lowercase}
+#back-btn{background:none;border:.5px solid var(--border-hover);border-radius:20px;color:var(--fg-dim);font-size:11px;letter-spacing:.05em;padding:8px 14px;flex-shrink:0;transition:all .2s;font-family:inherit;text-transform:lowercase}
 #back-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
 #planet-name{font-size:40px;font-weight:700;letter-spacing:.04em;line-height:1}
 
@@ -946,7 +978,7 @@ svg#solar {
 #tags-container{overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-height:500px;opacity:1}
 #tags-container.collapsed{max-height:0;opacity:0;pointer-events:none}
 #tags-list{display:flex;flex-wrap:wrap;gap:8px}
-.tag-filter{font-size:12px;letter-spacing:.01em;color:var(--fg-faint);cursor:var(--cur);transition:all .2s;padding:5px 12px;border:.5px solid var(--border-hover);line-height:1}
+.tag-filter{font-size:12px;letter-spacing:.01em;color:var(--fg-faint);cursor:var(--cur);transition:all .2s;padding:5px 12px;border:.5px solid var(--border-hover);border-radius:20px;line-height:1}
 .tag-filter:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.45)}
 .tag-filter.active{color:var(--fg);font-weight:500;border-color:#fff}
 #projects-label{font-size:11px;letter-spacing:.1em;color:var(--fg-faint);margin-bottom:16px;padding-left:var(--spacing)}
