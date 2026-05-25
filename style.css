@@ -252,15 +252,15 @@ svg#solar {
 
 .cd-mission-label {
   font-size: 10px;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   color: rgba(255,255,255,0.25);
   margin-bottom: 6px;
   text-transform: none;
 }
 
 .cd-mission-name {
+  letter-spacing: 0.2em;
   font-size: 12px;
-  letter-spacing: 0.45em;
   color: rgba(255,255,255,0.5);
   margin-bottom: 44px;
   text-transform: none;
@@ -720,7 +720,7 @@ svg#solar {
 }
 
 .random-project-btn {
-    text-transform: none;
+  text-transform: capitalize !important;
   display: inline-block;
   background: none;
   border: 0.5px solid var(--border-hover);
@@ -730,13 +730,13 @@ svg#solar {
   padding: 8px 14px;
   cursor: var(--cur);
   transition: all 0.2s;
-  font-family: inherit;
   white-space: nowrap;
 
 
 }
 
 .random-project-btn:hover {
+  text-transform: capitalize !important;
   border-color: rgba(255, 255, 255, 0.5);
   color: #fff;
 }
@@ -759,7 +759,6 @@ svg#solar {
   padding: 8px 14px;
   flex-shrink: 0;
   transition: all 0.2s;
-  font-family: inherit;
 }
 
 #back-btn:hover {
