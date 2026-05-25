@@ -2,7 +2,7 @@ SUPSI 2026
 Corso d’interaction design, CV429.01  
 Docenti: A. Gysin, G. Profeta  
 
-Progetto 1: La conquista dello spazio
+Progetto 2: NASA 70 - Archivio dei progetti
 
 # NASA 70
 Autore: Sofia Marques \
