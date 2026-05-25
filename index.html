@@ -247,7 +247,7 @@
         <input type="text" id="search-input" class="search-input" placeholder="search projects…" autocomplete="off">
         <div id="search-results" class="search-results"></div>
       </div>
-      <button class="random-project-btn">Random Project</button>
+      <button class="random-project-btn">Random project</button>
     </div>
   </header>
   <div class="list-intro"><span class="list-intro-label">Select a destination</span></div>
@@ -281,7 +281,7 @@
         <input type="text" id="search-input-planet" class="planet-search-input" placeholder="search projects…" autocomplete="off">
         <div id="search-results-planet" class="search-results"></div>
       </div>
-      <button class="random-project-btn">&#8594; Random Project</button>
+      <button class="random-project-btn">&#8594; RANDOM PROJECT</button>
     </div>
   </header>
   <div id="planet-header">
@@ -670,7 +670,7 @@ document.addEventListener('click',e=>{
     if (s <= 0) return 'Ignition';
     const m   = Math.floor(s / 60);
     const sec = s % 60;
-    return 'T–' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+    return 'T– ' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
   }
 
   function setMsg(m) { if(msgEl) msgEl.textContent = m; }
