@@ -49,6 +49,13 @@
     transition: all 0.2s ease;
     backdrop-filter: blur(4px);
     z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #reset-map-btn.visible {
+    opacity: 1;
+    pointer-events: all;
   }
 
   #reset-map-btn:hover {
@@ -56,70 +63,18 @@
     border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.05);
   }
-
-  /* Intro Page Styles */
-  #page-intro {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 1000;
-  }
-
-  .intro-content {
-    max-width: 540px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-  }
-
-  .intro-logo {
-    height: 120px;
-    width: auto;
-    margin-bottom: 8px;
-  }
-
-  .intro-text {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--fg-dim);
-    font-weight: 300;
-    letter-spacing: 0.01em;
-  }
-
-  #enter-btn {
-    margin-top: 12px;
-    background: none;
-    border: 0.5px solid var(--border-hover);
-    color: var(--fg-dim);
-    padding: 8px 14px;
-    font-size: 11px;
-    text-transform: none;
-    letter-spacing: 0.05em;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-
-  #enter-btn:hover {
-    background: white;
-    color: #000;
-    border-color: rgba(255, 255, 255, 0.5);
-  }
 </style>
 </head>
 <body>
-
-<div id="page-intro" class="page visible">
-  <div class="intro-content">
-    <img class="intro-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
-    <p class="intro-text">For NASA's 70th anniversary, we have developed an archive of projects celebrating seven decades of space exploration and innovation.</p>
-    <button id="enter-btn">Enter Archive</button>
-  </div>
+<div id="page-countdown">
+  <div id="cd-flash"></div>
+  <div class="cd-mission-label">Mission</div>
+  <div class="cd-mission-name">Apollo 11 — Saturn V</div>
+  <div id="cd-timer">T–00:10</div>
+  <div id="cd-status-msg"></div>
 </div>
 
-<div id="page-map" class="page hidden">
+<div id="page-map" class="page visible">
   <header class="site-header">
     <div class="site-header-left">
       <img id="site-logo" src="logo/logo_nasa_02.png" alt="NASA 70 Logo">
@@ -128,6 +83,8 @@
       <button class="random-project-btn">Random Project</button>
     </div>
   </header>
+
+  <div class="list-intro"><span class="list-intro-label">Select a destination</span></div>
 
   <div class="map-container">
     <svg id="solar" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" style="display: block; flex: 1; min-height: 0;">
@@ -138,7 +95,6 @@
       </radialGradient>
     </defs>
     <g id="viewport">
-      <rect width="1000" height="700" fill="#0a0908"/>
       <g fill="#fff" id="background-stars">
         <!-- Stelle di sfondo statiche -->
         <circle cx="78" cy="95" r="0.5" opacity="0.35"/>
@@ -186,52 +142,52 @@
             <line x1="0" y1="-52" x2="0" y2="52"/><line x1="-52" y1="0" x2="52" y2="0"/>
             <line x1="-36.8" y1="-36.8" x2="36.8" y2="36.8"/><line x1="36.8" y1="-36.8" x2="-36.8" y2="36.8"/>
           </g>
-          <text x="0" y="-74" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" letter-spacing="0.01em" text-anchor="middle" opacity="0.4">Sun</text>
+          <text x="0" y="-74" opacity="0.4">Sun</text>
         </g>
 
         <!-- Pianeti riposizionati sulle orbite -->
         <g class="planet-hit" data-planet="mercury" transform="translate(-80, 0)">
           <circle class="glow" r="15" fill="#fff" opacity="0.04"/>
           <circle class="ring" r="5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
-          <text x="0" y="-12" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Mercury</text>
+          <text x="0" y="-15" opacity="0.4">Mercury</text>
         </g>
 
         <g class="planet-hit" data-planet="venus" transform="translate(85, -85)">
           <circle class="glow" r="18" fill="#fff" opacity="0.04"/>
           <circle class="ring" r="7" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
-          <text x="0" y="-16" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Venus</text>
+          <text x="0" y="-18" opacity="0.4">Venus</text>
         </g>
 
         <g class="planet-hit" data-planet="earth" transform="translate(-147, 85)">
           <circle class="glow" r="20" fill="#fff" opacity="0.04"/>
           <circle class="ring" r="6.5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.55"/>
-          <text x="16" y="4" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" opacity="0.4">Earth</text>
+          <text x="0" y="-18" opacity="0.4">Earth</text>
         </g>
 
-        <g class="planet-hit" data-planet="moon" transform="translate(-132, 70)">
+        <g class="planet-hit" data-planet="moon" transform="translate(-165, 110)">
           <circle class="glow" r="10" fill="#fff" opacity="0.04"/>
           <circle class="ring" r="1.8" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.5"/>
-          <text x="6" y="1" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="7" opacity="0.4">Moon</text>
+          <text x="0" y="-10" opacity="0.4">Moon</text>
         </g>
 
-        <g class="planet-hit" data-planet="satellites" transform="translate(-162, 63)">
+        <g class="planet-hit" data-planet="satellites" transform="translate(-162, 45)">
           <circle class="glow" r="8" fill="#fff" opacity="0.04"/>
           <g transform="scale(0.35)">
             <path d="M -2 -4 L 2 -4 L 2 4 L -2 4 Z M -11 -3 L -4 -3 L -4 3 L -11 3 Z M 4 -3 L 11 -3 L 11 3 L 4 3 Z M -4 0 L -2 0 M 2 0 L 4 0 M 0 -4 L 0 -7 M -1.5 -7 L 1.5 -7" fill="none" stroke="#fff" stroke-width="1.8" opacity="0.6"/>
           </g>
-          <text x="0" y="15" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="7" letter-spacing="0.01em" text-anchor="middle" opacity="0.4">Satellites</text>
+          <text x="0" y="-18" opacity="0.4">Satellites</text>
         </g>
 
         <g class="planet-hit" data-planet="mars" transform="translate(110, 190)">
           <circle class="glow" r="16" fill="#fff" opacity="0.04"/>
           <circle class="ring" r="5.5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
-          <text x="0" y="-14" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Mars</text>
+          <text x="0" y="-16" opacity="0.4">Mars</text>
         </g>
 
         <g class="planet-hit" data-planet="jupiter" transform="translate(205, -205)">
           <circle class="glow" r="40" fill="#fff" opacity="0.03"/>
           <circle class="ring" r="26" fill="none" stroke="#fff" stroke-width="1" opacity="0.82"/>
-          <text x="0" y="-36" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Jupiter</text>
+          <text x="0" y="-40" opacity="0.4">Jupiter</text>
         </g>
 
         <g class="planet-hit" data-planet="saturn" transform="translate(-364, 64)">
@@ -239,33 +195,42 @@
           <circle class="ring" r="20" fill="none" stroke="#fff" stroke-width="1" opacity="0.82"/>
           <ellipse rx="33" ry="9" fill="none" stroke="#fff" stroke-width="0.75" opacity="0.58"/>
           <ellipse rx="39" ry="11" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.38"/>
-          <text x="0" y="-31" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Saturn</text>
+          <text x="0" y="-42" opacity="0.4">Saturn</text>
         </g>
 
         <g class="planet-hit" data-planet="uranus" transform="translate(76, -453)">
           <circle class="glow" r="25" fill="#fff" opacity="0.03"/>
           <circle class="ring" r="13" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.72"/>
-          <text x="0" y="-24" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Uranus</text>
+          <text x="0" y="-24" opacity="0.4">Uranus</text>
         </g>
 
         <g class="planet-hit" data-planet="neptune" transform="translate(-498, 181)">
           <circle class="glow" r="25" fill="#fff" opacity="0.03"/>
           <circle class="ring" r="12" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.68"/>
-          <text x="0" y="-22" fill="#fff" font-family="Helvetica Neue,sans-serif" font-size="9" text-anchor="middle" opacity="0.4">Neptune</text>
+          <text x="0" y="-24" opacity="0.4">Neptune</text>
         </g>
+      </g>
+
+      <!-- Elementi Beyond inseriti nella mappa -->
+      <g class="planet-hit" data-planet="nebula" transform="translate(1400, -400)">
+        <circle class="glow" r="60" fill="url(#sg)" opacity="0"/>
+        <g fill="#fff" opacity="0.4" transform="scale(2)">
+          <circle cx="-8" cy="-6" r="1.2"/><circle cx="8" cy="8" r="1.5"/><circle cx="10" cy="-10" r="0.8"/>
+          <circle cx="-12" cy="12" r="1.1"/><circle cx="0" cy="0" r="0.6"/>
+        </g>
+        <text x="0" y="-50" opacity="0.4">Stars</text>
+      </g>
+
+      <g class="planet-hit" data-planet="deepspace" transform="translate(-400, 1000)">
+        <circle class="glow" r="70" fill="url(#sg)" opacity="0"/>
+        <g stroke="#fff" stroke-width="0.5" fill="none" opacity="0.4" transform="scale(2)">
+          <ellipse rx="24" ry="8" transform="rotate(-30)"/><ellipse rx="16" ry="5" transform="rotate(-30)"/>
+          <circle r="1.5" fill="#fff" stroke="none"/>
+        </g>
+        <text x="0" y="-60" opacity="0.4">Deep Space</text>
       </g>
     </g>
   </svg>
-    <div class="map-top-nav">
-      <div class="sidebar-item" data-planet="solarsystem">Solar system <span>&#8594;</span></div>
-    </div>
-    <aside class="map-sidebar">
-      <div class="sidebar-label">Beyond</div>
-      <div class="sidebar-content">
-        <div class="sidebar-item" data-planet="deepspace">Deep space</div>
-        <div class="sidebar-item" data-planet="nebula">Stars</div>
-      </div>
-    </aside>
   </div>
   
   <!-- NUOVO BOTTONE DI RESET INSERITO NELLA MAPPA -->
@@ -288,22 +253,22 @@
   <div class="list-intro"><span class="list-intro-label">Select a destination</span></div>
 
   <div class="list-category">Solar System</div>
-  <div class="planet-row" data-planet="solarsystem"><span class="planet-row-index" style="font-size:13px">00</span><div><span class="planet-row-name">Solar System</span><span class="planet-row-sub">Milky Way &middot; Orion Arm</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="sun"><span class="planet-row-index">01</span><div><span class="planet-row-name">Sun</span><span class="planet-row-sub">Parent star &middot; system center</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="mercury"><span class="planet-row-index">02</span><div><span class="planet-row-name">Mercury</span><span class="planet-row-sub">Rocky planet &middot; first orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="venus"><span class="planet-row-index">03</span><div><span class="planet-row-name">Venus</span><span class="planet-row-sub">Rocky planet &middot; second orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="earth"><span class="planet-row-index">04</span><div><span class="planet-row-name">Earth</span><span class="planet-row-sub">Wandering planet &middot; third orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="moon"><span class="planet-row-index">05</span><div><span class="planet-row-name">Moon</span><span class="planet-row-sub">Natural satellite &middot; earth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="mars"><span class="planet-row-index">06</span><div><span class="planet-row-name">Mars</span><span class="planet-row-sub">Rocky planet &middot; fourth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="jupiter"><span class="planet-row-index">07</span><div><span class="planet-row-name">Jupiter</span><span class="planet-row-sub">Gas giant &middot; fifth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="saturn"><span class="planet-row-index">08</span><div><span class="planet-row-name">Saturn</span><span class="planet-row-sub">Gas giant &middot; sixth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="uranus"><span class="planet-row-index">09</span><div><span class="planet-row-name">Uranus</span><span class="planet-row-sub">Ice giant &middot; seventh orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="neptune"><span class="planet-row-index">10</span><div><span class="planet-row-name">Neptune</span><span class="planet-row-sub">Ice giant &middot; eighth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="satellites"><span class="planet-row-index" style="font-size:13px">11</span><div><span class="planet-row-name">Satellites</span><span class="planet-row-sub">Low earth orbit &middot; artificial network</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="solarsystem"><span class="planet-row-index"></span><div><span class="planet-row-name">Solar System</span><span class="planet-row-sub">Milky Way &middot; Orion Arm</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="sun"><span class="planet-row-index"></span><div><span class="planet-row-name">Sun</span><span class="planet-row-sub">Parent star &middot; system center</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="mercury"><span class="planet-row-index"></span><div><span class="planet-row-name">Mercury</span><span class="planet-row-sub">Rocky planet &middot; first orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="venus"><span class="planet-row-index"></span><div><span class="planet-row-name">Venus</span><span class="planet-row-sub">Rocky planet &middot; second orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="earth"><span class="planet-row-index"></span><div><span class="planet-row-name">Earth</span><span class="planet-row-sub">Wandering planet &middot; third orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="moon"><span class="planet-row-index"></span><div><span class="planet-row-name">Moon</span><span class="planet-row-sub">Natural satellite &middot; earth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="mars"><span class="planet-row-index"></span><div><span class="planet-row-name">Mars</span><span class="planet-row-sub">Rocky planet &middot; fourth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="jupiter"><span class="planet-row-index"></span><div><span class="planet-row-name">Jupiter</span><span class="planet-row-sub">Gas giant &middot; fifth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="saturn"><span class="planet-row-index"></span><div><span class="planet-row-name">Saturn</span><span class="planet-row-sub">Gas giant &middot; sixth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="uranus"><span class="planet-row-index"></span><div><span class="planet-row-name">Uranus</span><span class="planet-row-sub">Ice giant &middot; seventh orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="neptune"><span class="planet-row-index"></span><div><span class="planet-row-name">Neptune</span><span class="planet-row-sub">Ice giant &middot; eighth orbit</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="satellites"><span class="planet-row-index"></span><div><span class="planet-row-name">Satellites</span><span class="planet-row-sub">Low earth orbit &middot; artificial network</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
 
   <div class="list-category">Beyond</div>
-  <div class="planet-row" data-planet="nebula"><span class="planet-row-index" style="font-size:13px">12</span><div><span class="planet-row-name">Stars</span><span class="planet-row-sub">Deep space &middot; nebula region</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
-  <div class="planet-row" data-planet="deepspace"><span class="planet-row-index" style="font-size:13px">13</span><div><span class="planet-row-name">Deep space</span><span class="planet-row-sub">Extra-solar regions &middot; exoplanets</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="nebula"><span class="planet-row-index"></span><div><span class="planet-row-name">Stars</span><span class="planet-row-sub">Deep space &middot; nebula region</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
+  <div class="planet-row" data-planet="deepspace"><span class="planet-row-index"></span><div><span class="planet-row-name">Deep space</span><span class="planet-row-sub">Extra-solar regions &middot; exoplanets</span></div><span class="planet-row-dist">&mdash;</span><span class="planet-row-arrow">&#8594;</span></div>
 </div>
 
 <div id="page-planet" class="page hidden">
@@ -351,11 +316,57 @@ const planets = {
   deepspace:{name:"Deep Space",sub:"Extra-solar regions · exoplanets",desc:"The vast and unexplored regions beyond our solar system, rich in galaxies, quasars, and black holes.",projects:[]},
 };
 
+const planetIcons = {
+  solarsystem: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="9"/></svg>`,
+  sun: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="8"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/></svg>`,
+  mercury: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="3"/></svg>`,
+  venus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="4.5"/></svg>`,
+  earth: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="9" stroke-width="0.5" stroke-dasharray="1 1"/></svg>`,
+  moon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="2"/></svg>`,
+  mars: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="4"/></svg>`,
+  jupiter: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="8"/></svg>`,
+  saturn: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="5"/><ellipse cx="12" cy="12" rx="10" ry="3"/></svg>`,
+  uranus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="6"/></svg>`,
+  neptune: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="6"/></svg>`,
+  satellites: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M9 10h6v4H9zM2 11h7v2H2zM15 11h7v2h-7zM12 7v3M12 14v3"/></svg>`,
+  nebula: `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="8" r="1.5"/><circle cx="16" cy="14" r="2"/><circle cx="14" cy="6" r="1"/></svg>`,
+  deepspace: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>`
+};
+
+const typeIcons = {
+  code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
+  visual: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`,
+  interaction: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"></path></svg>`,
+  data: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`,
+  audio: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`,
+  three: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`,
+  default: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
+};
+
+function getProjectIcon(tags = []) {
+  const t = tags.map(v => v.toLowerCase());
+  if (t.some(tag => ['codice', 'programmazione', 'p5.js', 'javascript', 'generativo'].includes(tag))) return typeIcons.code;
+  if (t.some(tag => ['video', 'visuale', 'animazione', 'cinema', 'narrazione', 'storia'].includes(tag))) return typeIcons.visual;
+  if (t.some(tag => ['interazione', 'interaction', 'gioco', 'game', 'ux', 'esperimento'].includes(tag))) return typeIcons.interaction;
+  if (t.some(tag => ['dati', 'data', 'mappa', 'visualization', 'visualizzazione', 'grafico'].includes(tag))) return typeIcons.data;
+  if (t.some(tag => ['audio', 'suono', 'sound', 'musica', 'ambiente'].includes(tag))) return typeIcons.audio;
+  if (t.some(tag => ['3d', 'modelli', 'three.js', 'vr', 'spazio'].includes(tag))) return typeIcons.three;
+  return typeIcons.default;
+}
+
 async function loadData(){
   try{
     const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
     data.forEach(p=>{
-      const proj={title:p.titolo,desc:p.descrizione,tag:p.autore,link:p.url,img:'immagini/'+(Array.isArray(p.immagine)?p.immagine[0]:p.immagine),tags:p.tags};
+      const imgArr = Array.isArray(p.immagine) ? p.immagine : [p.immagine];
+      const proj={
+        title:p.titolo,
+        desc:p.descrizione,
+        tag:p.autore,
+        link:p.url,
+        img:'immagini/'+imgArr[0],
+        imgs: imgArr.map(i => 'immagini/' + i),
+        tags:p.tags};
       const a=p.autore;
       const key=['Luca Mazzola'].includes(a)?'solarsystem':
         a==='Michelle Chicherio'?'sun':
@@ -372,14 +383,18 @@ async function loadData(){
       const dist=row.querySelector('.planet-row-dist');
       if(dist)dist.textContent=n>0?(n===1?'1 project':`${n} projects`):'—';
     });
+    // Inject icons into list view
+    document.querySelectorAll('.planet-row').forEach(row => {
+      row.querySelector('.planet-row-index').innerHTML = planetIcons[row.dataset.planet] || '';
+    });
   }catch(e){console.error('Error loading data:',e)}
 }
 loadData();
 
-const pageIntro=document.getElementById('page-intro'),pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list'),pagePlanet=document.getElementById('page-planet');
+const pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list'),pagePlanet=document.getElementById('page-planet');
 
 function showView(id){
-  [pageIntro,pageMap,pageList,pagePlanet].forEach(p=>{
+  [pageMap,pageList,pagePlanet].forEach(p=>{
     p.classList.toggle('visible',p.id===id);
     p.classList.toggle('hidden',p.id!==id);
   });
@@ -398,47 +413,94 @@ function showPlanet(key,rowEl,forceOpen=false){
   const d=planets[key];
   if(!d.projects.length)return;
   drawer.innerHTML=`<div class="drawer-content">
-    <div class="drawer-side" id="side-info-${key}">
-      <div class="drawer-side-label">Project details</div>
-      <div class="side-placeholder" style="opacity:.3">Hover over a project to see details</div>
+    <div class="project-table-header">
+      <div>Title</div>
+      <div>Author</div>
+      <div>Note</div>
+      <div></div>
     </div>
     <div class="drawer-projects-grid">
-      ${d.projects.map(p=>`<div class="project-card" style="cursor:pointer">
-        ${p.img?`<img src="${p.img}" class="project-img" alt="${p.title}" loading="lazy">`:`<div class="project-img" style="background:rgba(255,255,255,.03);display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,.1)">no image available</div>`}
-        <div class="project-content"><div class="project-tag">${p.tag}</div><div class="project-title">${p.title}</div><span class="project-arrow">&#8594;</span></div>
-      </div>`).join('')}
+      ${d.projects.map((p, i)=>`
+        <div class="project-card" data-index="${i}" style="cursor:pointer">
+          <div class="project-title">${p.title}</div>
+          <div class="project-tag">by ${p.tag}</div>
+          <div class="project-desc-cell">${p.desc || ''}</div>
+          <span class="project-arrow" style="text-align:right;">&#8594;</span>
+        </div>`).join('')}
     </div>
   </div>`;
-  const sidePanel=drawer.querySelector(`#side-info-${key}`);
-  drawer.querySelectorAll('.project-card').forEach((card,i)=>{
-    card.addEventListener('click',()=>{
-      drawer.querySelectorAll('.project-card').forEach(c=>c.classList.remove('active-card'));
-      card.classList.add('active-card');
-      const proj=d.projects[i];
-      sidePanel.style.opacity='0';
-      setTimeout(()=>{
-        sidePanel.style.transform=`translateY(${card.offsetTop-sidePanel.offsetTop}px)`;
-        sidePanel.innerHTML=`<div class="project-title" style="color:#fff;font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2">${proj.title}</div>
-          <div style="color:var(--fg-dim);font-size:11px;margin-bottom:12px">by <span class="project-author">${proj.tag}</span></div>
-          ${proj.tags?.length?`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px">${proj.tags.map(t=>`<span style="font-size:9px;color:var(--fg-faint);border:.5px solid var(--border);padding:3px 8px;text-transform:lowercase">${t}</span>`).join('')}</div>`:'<div style="margin-bottom:24px"></div>'}
-          <div style="color:var(--fg);opacity:.8;font-size:14px;max-width:420px;line-height:1.6">${proj.desc||'No description available for this project.'}</div>
-          <a href="${proj.link}" target="_blank" class="visit-btn">visit project</a>`;
-        sidePanel.style.opacity='1';
-      },100);
+
+  drawer.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const proj = d.projects[card.dataset.index];
+      toggleProjectAccordion(card, proj);
     });
   });
   setTimeout(()=>drawer.classList.add('open'),10);
 }
 
-document.getElementById('enter-btn').addEventListener('click',()=>showView('page-map'));
+function toggleProjectAccordion(row, proj) {
+  let projDrawer = row.nextElementSibling;
+  if (!projDrawer || !projDrawer.classList.contains('project-details-drawer')) {
+    projDrawer = document.createElement('div');
+    projDrawer.className = 'project-details-drawer';
+    row.parentNode.insertBefore(projDrawer, row.nextSibling);
+  }
+  if (projDrawer.classList.contains('open')) {
+    projDrawer.classList.remove('open');
+    row.classList.remove('active-card');
+  } else {
+    row.parentNode.querySelectorAll('.project-details-drawer').forEach(d => d.classList.remove('open'));
+    row.parentNode.querySelectorAll('.project-card, .project-list-row').forEach(r => r.classList.remove('active-card'));
+    projDrawer.innerHTML = `
+      <div class="project-details-inner">
+        <div class="project-detail-images">
+          ${proj.imgs.slice(0, 2).map(imgSrc => `<img src="${imgSrc}" class="project-detail-img" onerror="this.style.display='none'">`).join('')}
+        </div>
+        <div class="project-detail-info">
+          <a href="${proj.link}" target="_blank" class="visit-btn">visit project</a>
+        </div>
+      </div>`;
+    setTimeout(() => {
+      projDrawer.classList.add('open');
+      row.classList.add('active-card');
+    }, 10);
+  }
+}
 
+// Funzione per renderizzare i progetti come elenco nella pagina del pianeta
+function renderPlanetProjects(key) {
+  const d = planets[key];
+  const grid = document.getElementById('projects-grid');
+  const nameEl = document.getElementById('planet-name');
+  
+  if (!d) return;
+  nameEl.textContent = d.name;
+  
+  grid.innerHTML = d.projects.length 
+    ? d.projects.map((p, i) => `
+        <div class="project-list-row" data-index="${i}" style="cursor:pointer">
+          <div class="project-alignment-spacer"></div>
+          <div class="project-list-row-info">
+            <span class="project-list-row-name">${p.title}</span>
+            <span class="project-list-row-sub">by ${p.tag}</span>
+          </div>
+          <span class="project-list-row-arrow">&#8594;</span>
+        </div>`).join('')
+    : '<div class="empty-state">No projects found for this destination.</div>';
+
+  grid.querySelectorAll('.project-list-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const proj = d.projects[row.dataset.index];
+      toggleProjectAccordion(row, proj);
+    });
+  });
+}
+
+// Aggiorna i listener per navigare alla pagina del pianeta invece di aprire il drawer
 document.querySelectorAll('.planet-row[data-planet]').forEach(row=>{
   row.addEventListener('click',()=>showPlanet(row.dataset.planet,row));
 });
-
-function getAllProjects(){
-  return Object.entries(planets).flatMap(([k,v])=>v.projects.map(p=>({...p,planetKey:k})));
-}
 
 document.querySelectorAll('.random-project-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -456,6 +518,15 @@ document.querySelectorAll('.planet-hit, .sidebar-item').forEach(el=>{
     setTimeout(()=>{if(row){row.scrollIntoView({behavior:'smooth',block:'start'});showPlanet(key,row,true)}},100);
   });
 });
+
+// Listener per il tasto back
+document.getElementById('back-btn').addEventListener('click', () => {
+  showView('page-list');
+});
+
+function getAllProjects(){
+  return Object.entries(planets).flatMap(([k,v])=>v.projects.map(p=>({...p,planetKey:k})));
+}
 
 document.querySelectorAll('#site-logo').forEach(logo=>logo.addEventListener('click',()=>showView('page-map')));
 
@@ -490,10 +561,15 @@ document.addEventListener('click',e=>{
 // SISTEMA DI ZOOM & NAVIGAZIONE (MOUSE + TOUCH)
 (function() {
   const s = document.getElementById('solar'), v = document.getElementById('viewport');
+  const resetBtn = document.getElementById('reset-map-btn');
   let sc = 1, tx = 0, ty = 0, isDragging = false, lx, ly, initialDist = 0;
 
   const update = () => {
     v.style.transform = `translate(${tx}px, ${ty}px) scale(${sc})`;
+
+    // Mostra il bottone solo se la vista è sensibilmente diversa da quella iniziale (sc=0.7, tx=150, ty=133)
+    const isDefault = Math.abs(sc - 0.7) < 0.01 && Math.abs(tx - 150) < 1 && Math.abs(ty - 133) < 1;
+    resetBtn?.classList.toggle('visible', !isDefault);
   };
 
   // Zoom con Rotellina
@@ -579,6 +655,61 @@ document.addEventListener('click',e=>{
   
   // Inizializza la mappa per mostrare tutti i pianeti all'avvio
   setTimeout(resetMap, 100);
+})();
+
+// Countdown Logic
+(function() {
+  const screen   = document.getElementById('page-countdown');
+  const timerEl  = document.getElementById('cd-timer');
+  const msgEl    = document.getElementById('cd-status-msg');
+  const flashEl  = document.getElementById('cd-flash');
+
+  let totalSec = 11; // T–00:10 (Inizio sequenza video)
+
+  function fmt(s) {
+    if (s <= 0) return 'Ignition';
+    const m   = Math.floor(s / 60);
+    const sec = s % 60;
+    return 'T–' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+
+  function setMsg(m) { if(msgEl) msgEl.textContent = m; }
+
+  const events = [
+    { at: 10, fn: () => { setMsg('Guidance is internal'); } },
+    { at: 9,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
+    { at: 2,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
+  ];
+
+  function launch() {
+    timerEl.textContent = 'Liftoff';
+    timerEl.style.letterSpacing = '0.15em';
+    timerEl.classList.remove('cd-final','cd-urgent');
+    timerEl.style.color = '#fff';
+    setMsg('We have a liftoff');
+
+    setTimeout(() => {
+      if(flashEl) flashEl.classList.add('go');
+      setTimeout(() => {
+        if(flashEl) flashEl.classList.remove('go');
+        screen.classList.add('hidden-countdown');
+        setTimeout(() => {
+          screen.style.display = 'none';
+          showView('page-map');
+        }, 800);
+      }, 130);
+    }, 900);
+  }
+
+  function tick() {
+    totalSec--;
+    events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
+    if (totalSec <= 0) { launch(); return; }
+    timerEl.textContent = fmt(totalSec);
+    setTimeout(tick, 1000);
+  }
+
+  setTimeout(tick, 500);
 })();
 </script>
 </body>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 /* --- VARIABLES & BASE --- */
 :root {
   --bg: #0a0908;
@@ -56,7 +58,12 @@ svg#solar {
 }
 
 .planet-hit text {
-  transition: all 0.2s;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.01em;
+  text-anchor: middle;
+  fill: #fff;
+  transition: all 0.2s ease;
 }
 
 .planet-hit:hover .glow {
@@ -65,7 +72,8 @@ svg#solar {
 
 /* Forza l'opacità massima per i gruppi grafici durante l'hover */
 .planet-hit[data-planet="solarsystem"]:hover g,
-.planet-hit[data-planet="deepspace"]:hover g {
+.planet-hit[data-planet="deepspace"]:hover g,
+.planet-hit[data-planet="nebula"]:hover g {
   opacity: 1 !important;
 }
 
@@ -220,26 +228,87 @@ svg#solar {
   opacity: 1;
 }
 
+/* --- COUNTDOWN PAGE --- */
+#page-countdown {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0a0908;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  transition: opacity 0.8s ease;
+}
+
+#page-countdown.hidden-countdown {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cd-mission-label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 6px;
+  text-transform: none;
+}
+
+.cd-mission-name {
+  font-size: 12px;
+  letter-spacing: 0.45em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 44px;
+  text-transform: none;
+}
+
+#cd-timer {
+  font-size: 80px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+#cd-timer.cd-urgent { color: #ffffff; }
+#cd-timer.cd-final { animation: cd-blink 0.5s step-end infinite; }
+
+@keyframes cd-blink {
+  0%,100% { color: #ff4422; opacity: 1; }
+  50%      { color: #ff4422; opacity: 0.25; }
+}
+
+#cd-status-msg {
+  margin-top: 24px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.35);
+  text-transform: none;
+  height: 14px;
+}
+
 /* --- LAYOUT & PAGES --- */
 .page {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease;
   overflow-y: auto;
 }
 
 .page.hidden {
   opacity: 0;
   pointer-events: none;
-  transform: translateY(16px);
 }
 
 .page.visible {
   opacity: 1;
   pointer-events: all;
-  transform: translateY(0);
 }
 
 /* --- HEADER --- */
@@ -267,7 +336,7 @@ svg#solar {
 }
 
 #site-logo {
-  height: 48px; /* Logo leggermente più grande per coerenza con l'SVG */
+  height: 60px; /* Logo leggermente più grande per coerenza con l'SVG */
   width: auto;
   display: block;
   padding: 0; /* Rimosso padding che creava disallineamento */
@@ -298,7 +367,7 @@ svg#solar {
   width: 160px;
   outline: none;
   text-transform: none;
-  font-family: inherit;
+  font-family: helvetica;
   transition: width 0.3s ease, border-color 0.2s;
 }
 
@@ -347,7 +416,7 @@ svg#solar {
   font-size: 7px;
   color: var(--fg-dim);
   letter-spacing: 0.01em;
-  text-transform: capitalize !important;
+  text-transform: none !important;
 }
 
 .search-item-desc {
@@ -389,7 +458,7 @@ svg#solar {
   grid-template-columns: 52px 1fr auto 28px;
   align-items: center;
   gap: 0 16px;
-  padding: 14px var(--spacing);
+  padding: 14px 24px;
   border-bottom: 0.5px solid var(--border);
   cursor: var(--cur);
   transition: background 0.15s;
@@ -413,8 +482,24 @@ svg#solar {
   font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--fg-faint);
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   font-variant-numeric: tabular-nums;
+}
+
+.planet-row-index svg, .project-icon svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  transition: opacity 0.2s, color 0.2s;
+  display: block;
+}
+
+.planet-row:hover .planet-row-index svg,
+.project-card:hover .project-icon svg {
+  opacity: 1;
+  color: #fff;
 }
 
 .planet-row-name {
@@ -462,91 +547,154 @@ svg#solar {
 }
 
 .drawer-content {
-  display: grid;
-  position: relative;
-  grid-template-columns: 1.2fr 1.8fr;
-  gap: 40px;
-  padding: 32px var(--spacing);
-}
-
-.drawer-side {
-  font-size: 13px;
-  color: var(--fg-faint);
-  letter-spacing: 0.02em;
-  line-height: 1.7;
-  padding-right: 20px;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-  will-change: transform;
-}
-
-.drawer-side-label {
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--fg-faint);
-  margin-bottom: 24px;
-  opacity: 0.5;
+  padding: 32px 0;
 }
 
 .drawer-projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.drawer-projects-grid .project-card:only-child {
-  grid-column: 3;
-}
-
-.drawer-projects-grid .project-card:first-child:nth-last-child(2) {
-  grid-column: 2;
-}
-
-.drawer-projects-grid .project-card {
-  border-color: rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
-  height: 280px;
-  transition: border-color 0.2s ease, background 0.2s ease;
-  overflow: hidden;
+  gap: 0;
 }
 
-.drawer-projects-grid .project-img {
-  height: 160px;
-  width: 100%;
-  object-fit: cover;
-  border-bottom: 0.5px solid var(--border);
+.project-alignment-spacer {
+  width: 92px; /* Mantiene il rientro richiesto precedentemente */
   flex-shrink: 0;
 }
 
-.drawer-projects-grid .project-content {
-  padding: 16px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
+.project-type-mini-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--fg-faint);
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
-.drawer-projects-grid .project-title {
-  font-size: 14px;
-  white-space: nowrap;
+.project-table-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1.2fr 2fr 40px;
+  gap: 32px;
+  padding: 12px var(--spacing);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  color: var(--fg-faint);
+  border-bottom: 0.5px solid var(--border);
+}
+
+.drawer-projects-grid .project-card {
+  display: grid;
+  grid-template-columns: 1.5fr 1.2fr 2fr 40px;
+  align-items: start;
+  gap: 32px;
+  padding: 20px var(--spacing);
+  border: none;
+  border-bottom: 0.5px solid var(--border);
+  transition: border-color 0.2s ease, background 0.2s ease;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background: transparent;
+  height: auto;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-list-row {
+  display: grid;
+  grid-template-columns: 92px 1fr auto 28px;
+  align-items: center;
+  gap: 0 32px;
+  padding: 14px var(--spacing);
+  border-bottom: 0.5px solid var(--border);
+}
+
+/* --- PROJECT ACCORDION --- */
+.project-details-drawer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+}
+
+.project-details-drawer.open {
+  max-height: 2000px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.project-details-inner {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.project-detail-images {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Impedisce alle immagini di allungarsi per forzare la stessa altezza */
+}
+
+.project-detail-img {
+  max-width: 480px;
+  flex: 1 1 300px;
+  width: 100%;
+  height: auto; /* Rispetta le proporzioni naturali del file sorgente */
+  display: block;
+  border: 0.5px solid rgba(255,255,255,0.1);
+}
+
+.project-detail-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 12px;
+}
+
+.project-detail-actions {
+  padding-left: 0;
+}
+.drawer-projects-grid .project-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s;
+}
+
+.project-desc-cell {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--fg-dim);
 }
 
 .drawer-projects-grid .project-tag {
-  font-size: 8px;
+  font-size: 11px;
+  color: var(--fg-faint);
+  text-transform: lowercase;
+}
+
+.drawer-projects-grid .project-arrow {
+  font-size: 12px;
+  color: var(--fg-faint);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  text-align: center;
 }
 
 .planet-drawer .project-card:hover {
-  transform: none !important;
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
+.planet-drawer .project-card:hover .project-title {
+  color: #fff;
+}
+
+.planet-drawer .project-card:hover .project-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
 .planet-drawer .project-card.active-card {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .planet-drawer .project-card .project-desc {
@@ -556,7 +704,7 @@ svg#solar {
 /* --- BUTTONS --- */
 .visit-btn {
   display: inline-block;
-  margin-top: 28px;
+  margin-top: 0; /* Rimosso margine perché gestito dal flex-gap */
   padding: 6px 14px;
   border: 0.5px solid var(--border-hover);
   color: var(--fg);
@@ -793,8 +941,8 @@ svg#solar {
 #back-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
 #planet-name{font-size:40px;font-weight:700;letter-spacing:.04em;line-height:1}
 
-#projects-section{padding:32px var(--spacing) 64px}
-.filters-row{display:flex;align-items:flex-start;gap:16px;border-bottom:.5px solid var(--border);padding-bottom:12px;margin-bottom:20px}
+#projects-section{padding:32px 0 64px}
+.filters-row{display:flex;align-items:flex-start;gap:16px;border-bottom:.5px solid var(--border);padding-bottom:12px;margin:0 var(--spacing) 20px}
 .filters-label{color:var(--fg-faint);font-size:10px;letter-spacing:.05em;flex-shrink:0;margin-top:6px}
 #tags-container{overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-height:500px;opacity:1}
 #tags-container.collapsed{max-height:0;opacity:0;pointer-events:none}
@@ -802,7 +950,7 @@ svg#solar {
 .tag-filter{font-size:12px;letter-spacing:.01em;color:var(--fg-faint);cursor:var(--cur);transition:all .2s;padding:5px 12px;border:.5px solid var(--border-hover);line-height:1}
 .tag-filter:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.45)}
 .tag-filter.active{color:var(--fg);font-weight:500;border-color:#fff}
-#projects-label{font-size:11px;letter-spacing:.1em;color:var(--fg-faint);margin-bottom:16px}
+#projects-label{font-size:11px;letter-spacing:.1em;color:var(--fg-faint);margin-bottom:16px;padding-left:var(--spacing)}
 #projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;align-items:start}
 
 .project-card{background:var(--bg);cursor:var(--cur);transition:border-color .2s,background .2s;text-decoration:none;display:block;border:.5px solid rgba(255,255,255,.1);overflow:hidden}
@@ -828,3 +976,12 @@ svg#solar {
   transition: width 0.3s ease, border-color 0.2s;
 }
 .planet-search-input:focus { border-color: rgba(255,255,255,0.5); width: 220px; }
+
+@media (max-width: 900px) {
+  .project-table-header { display: none; }
+  .drawer-projects-grid .project-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px var(--spacing);
+  }
+}
