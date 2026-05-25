@@ -41,6 +41,7 @@
     background: rgba(10, 9, 8, 0.6);
     color: rgba(255, 255, 255, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
     padding: 8px 14px;
     font-family: "Helvetica Neue", sans-serif;
     font-size: 11px;
@@ -70,7 +71,13 @@
   <div id="cd-flash"></div>
   <div class="cd-mission-label">Mission</div>
   <div class="cd-mission-name">Apollo 11 — Saturn V</div>
-  <div id="cd-timer">T–00:10</div>
+  <div id="cd-timer">
+    <div class="cd-unit"><span> - </span><span class="cd-label-item">HOUR</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span>00</span><span class="cd-label-item">MINUTE</span></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-unit"><span>10</span><span class="cd-label-item">SECOND</span></div>
+  </div>
   <div id="cd-status-msg"></div>
 </div>
 
@@ -425,7 +432,7 @@ function showPlanet(key,rowEl,forceOpen=false){
           <div class="project-title">${p.title}</div>
           <div class="project-tag">by ${p.tag}</div>
           <div class="project-desc-cell">${p.desc || ''}</div>
-          <span class="project-arrow" style="text-align:right;">&#8594;</span>
+          <div><a href="${p.link}" target="_blank" class="visit-btn" onclick="event.stopPropagation()">visit project</a></div>
         </div>`).join('')}
     </div>
   </div>`;
@@ -456,9 +463,6 @@ function toggleProjectAccordion(row, proj) {
       <div class="project-details-inner">
         <div class="project-detail-images">
           ${proj.imgs.slice(0, 2).map(imgSrc => `<img src="${imgSrc}" class="project-detail-img" onerror="this.style.display='none'">`).join('')}
-        </div>
-        <div class="project-detail-info">
-          <a href="${proj.link}" target="_blank" class="visit-btn">visit project</a>
         </div>
       </div>`;
     setTimeout(() => {
@@ -667,10 +671,16 @@ document.addEventListener('click',e=>{
   let totalSec = 11; // T–00:10 (Inizio sequenza video)
 
   function fmt(s) {
-    if (s <= 0) return 'Ignition';
+    if (s <= 0) return 'IGNITION';
     const m   = Math.floor(s / 60);
     const sec = s % 60;
-    return 'T– ' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+    return `
+      <div class="cd-unit"><span>-</span><span class="cd-label-item">HOUR</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span>${String(m).padStart(2,'0')}</span><span class="cd-label-item">MINUTE</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span>${String(sec).padStart(2,'0')}</span><span class="cd-label-item">SECOND</span></div>
+    `;
   }
 
   function setMsg(m) { if(msgEl) msgEl.textContent = m; }
@@ -678,12 +688,12 @@ document.addEventListener('click',e=>{
   const events = [
     { at: 10, fn: () => { setMsg('Guidance is internal'); } },
     { at: 9,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
-    { at: 2,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
+    { at: 3,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
   ];
 
   function launch() {
-    timerEl.textContent = 'Liftoff';
-    timerEl.style.letterSpacing = '0.15em';
+    timerEl.innerHTML = 'LIFTOFF';
+    timerEl.style.letterSpacing = '0.06em';
     timerEl.classList.remove('cd-final','cd-urgent');
     timerEl.style.color = '#fff';
     setMsg('We have a liftoff');
@@ -705,7 +715,7 @@ document.addEventListener('click',e=>{
     totalSec--;
     events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
     if (totalSec <= 0) { launch(); return; }
-    timerEl.textContent = fmt(totalSec);
+    timerEl.innerHTML = fmt(totalSec);
     setTimeout(tick, 1000);
   }
 
