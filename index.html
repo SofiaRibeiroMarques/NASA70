@@ -60,9 +60,9 @@
   }
 
   #reset-map-btn:hover {
-    color: #fff;
+    color: #000000;
     border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(255, 255, 255);
   }
 </style>
 </head>
@@ -154,19 +154,19 @@
 
         <!-- Pianeti riposizionati sulle orbite -->
         <g class="planet-hit" data-planet="mercury" transform="translate(-80, 0)">
-          <circle class="glow" r="15" fill="#fff" opacity="0.04"/>
+          <circle class="glow" r="15" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
           <text x="0" y="-15" opacity="0.4">Mercury</text>
         </g>
 
         <g class="planet-hit" data-planet="venus" transform="translate(85, -85)">
-          <circle class="glow" r="18" fill="#fff" opacity="0.04"/>
+          <circle class="glow" r="18" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="7" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
           <text x="0" y="-18" opacity="0.4">Venus</text>
         </g>
 
         <g class="planet-hit" data-planet="earth" transform="translate(-147, 85)">
-          <circle class="glow" r="20" fill="#fff" opacity="0.04"/>
+          <circle class="glow" r="20" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="6.5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.55"/>
           <text x="0" y="-18" opacity="0.4">Earth</text>
         </g>
@@ -178,7 +178,7 @@
         </g>
 
         <g class="planet-hit" data-planet="satellites" transform="translate(-162, 45)">
-          <circle class="glow" r="8" fill="#fff" opacity="0.04"/>
+          <circle class="glow" r="8" fill="url(#sg)" opacity="0"/>
           <g transform="scale(0.35)">
             <path d="M -2 -4 L 2 -4 L 2 4 L -2 4 Z M -11 -3 L -4 -3 L -4 3 L -11 3 Z M 4 -3 L 11 -3 L 11 3 L 4 3 Z M -4 0 L -2 0 M 2 0 L 4 0 M 0 -4 L 0 -7 M -1.5 -7 L 1.5 -7" fill="none" stroke="#fff" stroke-width="1.8" opacity="0.6"/>
           </g>
@@ -186,19 +186,19 @@
         </g>
 
         <g class="planet-hit" data-planet="mars" transform="translate(110, 190)">
-          <circle class="glow" r="16" fill="#fff" opacity="0.04"/>
+          <circle class="glow" r="16" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="5.5" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.6"/>
           <text x="0" y="-16" opacity="0.4">Mars</text>
         </g>
 
         <g class="planet-hit" data-planet="jupiter" transform="translate(205, -205)">
-          <circle class="glow" r="40" fill="#fff" opacity="0.03"/>
+          <circle class="glow" r="40" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="26" fill="none" stroke="#fff" stroke-width="1" opacity="0.82"/>
           <text x="0" y="-40" opacity="0.4">Jupiter</text>
         </g>
 
         <g class="planet-hit" data-planet="saturn" transform="translate(-364, 64)">
-          <circle class="glow" r="45" fill="#fff" opacity="0.03"/>
+          <circle class="glow" r="45" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="20" fill="none" stroke="#fff" stroke-width="1" opacity="0.82"/>
           <ellipse rx="33" ry="9" fill="none" stroke="#fff" stroke-width="0.75" opacity="0.58"/>
           <ellipse rx="39" ry="11" fill="none" stroke="#fff" stroke-width="0.45" opacity="0.38"/>
@@ -206,13 +206,13 @@
         </g>
 
         <g class="planet-hit" data-planet="uranus" transform="translate(76, -453)">
-          <circle class="glow" r="25" fill="#fff" opacity="0.03"/>
+          <circle class="glow" r="25" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="13" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.72"/>
           <text x="0" y="-24" opacity="0.4">Uranus</text>
         </g>
 
         <g class="planet-hit" data-planet="neptune" transform="translate(-498, 181)">
-          <circle class="glow" r="25" fill="#fff" opacity="0.03"/>
+          <circle class="glow" r="25" fill="url(#sg)" opacity="0"/>
           <circle class="ring" r="12" fill="none" stroke="#fff" stroke-width="0.85" opacity="0.68"/>
           <text x="0" y="-24" opacity="0.4">Neptune</text>
         </g>
