@@ -1,4 +1,6 @@
-/* --- VARIABLES & BASE --- */
+/* ==========================================================================
+   1. VARIABLES & BASE STYLES
+   ========================================================================== */
 :root {
   --bg: #0a0908;
   --fg: #fff;
@@ -16,7 +18,7 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   cursor: var(--cur);
-  scrollbar-gutter: stable; /* Evita che il logo si sposti quando appare la scrollbar */
+  scrollbar-gutter: stable; /* Evita lo spostamento del layout all'apparire della scrollbar */
 }
 
 body {
@@ -32,7 +34,54 @@ a, button, input, #site-logo {
   cursor: var(--cur);
 }
 
-/* --- SVG MAP --- */
+/* ==========================================================================
+   2. UNIFIED BUTTONS STYLE (Fixed Size - Normal, Hover & Active States)
+   ========================================================================== */
+.visit-btn, 
+.random-project-btn, 
+#back-btn, 
+.tag-filter {
+  display: inline-block;
+  background: transparent;
+  color: var(--fg-dim);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 8px 16px;
+  border: 0.5px solid var(--border-hover);
+  border-radius: 20px;
+  cursor: var(--cur);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  text-transform: none !important; /* Uniforma l'estetica in minuscolo */
+  font-weight: 400 !important; /* Mantiene lo stesso peso sia normale che hover per non deformare il bottone */
+  outline: none;
+}
+
+/* Stato HOVER unico per tutti i bottoni e stato ATTIVO per i filtri */
+.visit-btn:hover, 
+.random-project-btn:hover, 
+#back-btn:hover, 
+.tag-filter:hover,
+.tag-filter.active {
+  background: var(--fg) !important;       /* Sfondo bianco puro */
+  color: var(--bg) !important;             /* Testo scuro del background */
+  border-color: var(--fg) !important;
+  font-weight: 400 !important;             /* Blocca lo spessore del testo evitando l'allargamento */
+}
+
+/* Reset margini o comportamenti specifici legati al flusso */
+.visit-btn {
+  margin-top: 0;
+}
+#back-btn {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   3. SVG MAP & PLANET INTERACTION
+   ========================================================================== */
 svg#solar {
   width: 100%;
   height: 100%;
@@ -65,7 +114,7 @@ svg#solar {
 }
 
 .planet-hit:hover .glow {
-  opacity: 0.12;
+  opacity: 0.4;
 }
 
 /* Forza l'opacità massima per i gruppi grafici durante l'hover */
@@ -113,20 +162,20 @@ svg#solar {
   opacity: 1 !important;
 }
 
-/* Specific override for technical icons (Solar System, Deep Space): ensure correct fill/stroke on hover */
+/* Specific overrides per icone tecniche (Solar System, Deep Space) */
 .planet-hit[data-planet="solarsystem"]:hover circle,
 .planet-hit[data-planet="deepspace"]:hover circle:not(.hit-area),
 .planet-hit[data-planet="deepspace"]:hover text {
-  opacity: 1 !important; /* General opacity for all circles in the icon */
+  opacity: 1 !important;
 }
 .planet-hit[data-planet="solarsystem"]:hover circle[fill="none"],
 .planet-hit[data-planet="deepspace"]:hover circle[fill="none"]:not(.hit-area) {
-  fill: none !important; /* Ensure orbits remain unfilled */
-  stroke: #fff !important; /* Ensure stroke is white */
+  fill: none !important;
+  stroke: #fff !important;
 }
 .planet-hit[data-planet="solarsystem"]:hover circle[fill="#fff"],
 .planet-hit[data-planet="deepspace"]:hover circle[fill="#fff"] {
-  fill: #fff !important; /* Ensure sun and small planets remain filled white */
+  fill: #fff !important;
   stroke: none !important; 
 }
 .planet-hit[data-planet="deepspace"]:hover ellipse {
@@ -138,19 +187,21 @@ svg#solar {
 .planet-hit[data-planet="deepspace"]:hover line,
 .planet-hit[data-planet="deepspace"]:hover ellipse,
 .planet-hit[data-planet="deepspace"]:hover path {
-  stroke: #fff !important; /* Ensure lines and ellipse stroke white */
-  fill: none !important; /* Ensure lines and ellipse remain unfilled */
-  opacity: 1 !important; /* Ensure opacity is 1, consistent with other hover effects */
+  stroke: #fff !important;
+  fill: none !important;
+  opacity: 1 !important;
 }
 
-/* Rimuove esplicitamente ogni bordo (stroke) da Deep Space e dalle aree di clic */
+/* Rimozione bordi da Deep Space e aree di clic */
 .planet-hit[data-planet="deepspace"]:hover circle,
 .hit-area {
   stroke: none !important;
   stroke-width: 0 !important;
 }
 
-/* --- MAP SIDEBAR --- */
+/* ==========================================================================
+   4. MAP SIDEBAR & NAVIGATION
+   ========================================================================== */
 .map-container {
   display: flex;
   flex-direction: column;
@@ -226,7 +277,9 @@ svg#solar {
   opacity: 1;
 }
 
-/* --- COUNTDOWN PAGE --- */
+/* ==========================================================================
+   5. COUNTDOWN PAGE
+   ========================================================================== */
 #page-countdown {
   position: fixed;
   inset: 0;
@@ -283,7 +336,7 @@ svg#solar {
 
 .cd-sep {
   opacity: 0.5;
-  padding-bottom: 20px; /* Allinea il colone alla base dei numeri */
+  padding-bottom: 20px; /* Allinea i due punti alla base dei numeri */
 }
 
 .cd-label-item {
@@ -311,7 +364,9 @@ svg#solar {
   height: 14px;
 }
 
-/* --- LAYOUT & PAGES --- */
+/* ==========================================================================
+   6. LAYOUT VIEWS & HEADER
+   ========================================================================== */
 .page {
   position: fixed;
   inset: 0;
@@ -331,7 +386,6 @@ svg#solar {
   pointer-events: all;
 }
 
-/* --- HEADER --- */
 .site-header {
   position: sticky;
   top: 0;
@@ -342,8 +396,8 @@ svg#solar {
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--spacing);
-  height: 80px; /* Altezza aumentata per contenere il logo senza sforare */
-  flex-shrink: 0; /* Impedisce all'header di rimpicciolirsi */
+  height: 80px;
+  flex-shrink: 0;
 }
 
 .site-header-left {
@@ -356,10 +410,10 @@ svg#solar {
 }
 
 #site-logo {
-  height: 60px; /* Logo leggermente più grande per coerenza con l'SVG */
+  height: 60px;
   width: auto;
   display: block;
-  padding: 0; /* Rimosso padding che creava disallineamento */
+  padding: 0;
 }
 
 .site-header-right {
@@ -368,7 +422,9 @@ svg#solar {
   gap: 20px;
 }
 
-/* --- SEARCH --- */
+/* ==========================================================================
+   7. SEARCH COMPONENTS
+   ========================================================================== */
 .search-wrap {
   position: relative;
   display: flex;
@@ -376,7 +432,7 @@ svg#solar {
   align-items: flex-end;
 }
 
-.search-input {
+.search-input, .planet-search-input {
   background: none;
   border: none;
   border-bottom: 0.5px solid var(--border-hover);
@@ -387,11 +443,11 @@ svg#solar {
   width: 160px;
   outline: none;
   text-transform: none;
-  font-family: helvetica;
+  font-family: helvetica, sans-serif;
   transition: width 0.3s ease, border-color 0.2s;
 }
 
-.search-input:focus {
+.search-input:focus, .planet-search-input:focus {
   border-color: rgba(255, 255, 255, 0.5);
   width: 220px;
 }
@@ -446,7 +502,9 @@ svg#solar {
   line-height: 1.4;
 }
 
-/* --- LIST VIEW --- */
+/* ==========================================================================
+   8. LIST VIEW (PLANET ROWS)
+   ========================================================================== */
 .list-intro {
   padding: 32px var(--spacing) 0;
   display: flex;
@@ -553,7 +611,9 @@ svg#solar {
   text-align: center;
 }
 
-/* --- DRAWER --- */
+/* ==========================================================================
+   9. PLANET DRAWER & PROJECT ACCORDIONS
+   ========================================================================== */
 .planet-drawer {
   max-height: 0;
   overflow: hidden;
@@ -577,7 +637,7 @@ svg#solar {
 }
 
 .project-alignment-spacer {
-  width: 92px; /* Mantiene il rientro richiesto precedentemente */
+  width: 92px;
   flex-shrink: 0;
 }
 
@@ -634,7 +694,6 @@ svg#solar {
   border-bottom: 0.5px solid var(--border);
 }
 
-/* --- PROJECT ACCORDION --- */
 .project-details-drawer {
   max-height: 0;
   overflow: hidden;
@@ -660,14 +719,14 @@ svg#solar {
   gap: 16px;
   width: 100%;
   flex-wrap: wrap;
-  align-items: flex-start; /* Impedisce alle immagini di allungarsi per forzare la stessa altezza */
+  align-items: flex-start;
 }
 
 .project-detail-img {
   max-width: 480px;
   flex: 1 1 300px;
   width: 100%;
-  height: auto; /* Rispetta le proporzioni naturali del file sorgente */
+  height: auto;
   display: block;
   border: 0.5px solid rgba(255,255,255,0.1);
 }
@@ -682,6 +741,7 @@ svg#solar {
 .project-detail-actions {
   padding-left: 0;
 }
+
 .drawer-projects-grid .project-title {
   font-size: 15px;
   font-weight: 500;
@@ -721,6 +781,7 @@ svg#solar {
   opacity: 1;
   transform: translateX(3px);
 }
+
 .planet-drawer .project-card.active-card {
   background: rgba(255, 255, 255, 0.04);
 }
@@ -729,72 +790,15 @@ svg#solar {
   display: none !important;
 }
 
-/* --- BUTTONS --- */
-.visit-btn {
-  display: inline-block;
-  margin-top: 0; /* Rimosso margine perché gestito dal flex-gap */
-  padding: 6px 14px;
-  border: 0.5px solid var(--border-hover);
-  border-radius: 20px;
-  color: var(--fg);
-  text-decoration: none;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  transition: all 0.2s;
-}
-
-.visit-btn:hover {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.random-project-btn {
-  text-transform: capitalize !important;
-  display: inline-block;
-  background: none;
-  border: 0.5px solid var(--border-hover);
-  border-radius: 20px;
-  color: var(--fg-dim);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  padding: 8px 14px;
-  cursor: var(--cur);
-  transition: all 0.2s;
-  white-space: nowrap;
-
-
-}
-
-.random-project-btn:hover {
-  text-transform: capitalize !important;
-  border-color: rgba(255, 255, 255, 0.5);
-  color: #fff;
-}
-
-/* --- PLANET DETAIL PAGE --- */
+/* ==========================================================================
+   10. PLANET DETAIL PAGE & GRID
+   ========================================================================== */
 #planet-header {
   padding: 32px var(--spacing) 20px;
   border-bottom: 0.5px solid var(--border);
   display: flex;
   align-items: center;
   gap: 24px;
-}
-
-#back-btn {
-  background: none;
-  border: 0.5px solid var(--border-hover);
-  border-radius: 20px;
-  color: var(--fg-dim);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  padding: 8px 14px;
-  flex-shrink: 0;
-  transition: all 0.2s;
-}
-
-#back-btn:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: #fff;
 }
 
 #planet-name {
@@ -805,7 +809,7 @@ svg#solar {
 }
 
 #projects-section {
-  padding: 32px var(--spacing) 64px;
+  padding: 32px 0 64px;
 }
 
 .filters-row {
@@ -814,7 +818,7 @@ svg#solar {
   gap: 16px;
   border-bottom: 0.5px solid var(--border);
   padding-bottom: 12px;
-  margin-bottom: 20px;
+  margin: 0 var(--spacing) 20px;
 }
 
 .filters-label {
@@ -844,34 +848,12 @@ svg#solar {
   gap: 8px;
 }
 
-.tag-filter {
-  font-size: 12px;
-  letter-spacing: 0.01em;
-  color: var(--fg-faint);
-  cursor: var(--cur);
-  transition: all 0.2s;
-  padding: 5px 12px;
-  border: 0.5px solid var(--border-hover);
-  border-radius: 20px;
-  line-height: 1;
-}
-
-.tag-filter:hover {
-  color: rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.45);
-}
-
-.tag-filter.active {
-  color: var(--fg);
-  font-weight: 500;
-  border-color: #fff;
-}
-
 #projects-label {
   font-size: 11px;
   letter-spacing: 0.1em;
   color: var(--fg-faint);
   margin-bottom: 16px;
+  padding-left: var(--spacing);
 }
 
 #projects-grid {
@@ -887,12 +869,12 @@ svg#solar {
   transition: border-color 0.2s, background 0.2s;
   text-decoration: none;
   display: block;
-  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
 
 .project-card:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.32);
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -946,70 +928,13 @@ svg#solar {
   letter-spacing: 0.05em;
 }
 
-.planet-search-input {
-  background: none;
-  border: none;
-  border-bottom: 0.5px solid var(--border-hover);
-  color: var(--fg);
-  font-size: 9px;
-  letter-spacing: 0.05em;
-  padding: 4px 0;
-  width: 160px;
-  outline: none;
-  transition: width 0.3s ease, border-color 0.2s;
-}
-
-.planet-search-input:focus {
-  border-color: rgba(255, 255, 255, 0.5);
-  width: 220px;
-}
-.visit-btn:hover{background:var(--fg);color:var(--bg)}
-.random-project-btn{display:inline-block;background:none;border:.5px solid var(--border-hover);border-radius:20px;color:var(--fg-dim);font-size:11px;letter-spacing:.05em;padding:8px 14px;cursor:var(--cur);transition:all .2s;font-family:inherit;text-transform:lowercase;white-space:nowrap}
-.random-project-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
-
-#planet-header{padding:32px var(--spacing) 20px;border-bottom:.5px solid var(--border);display:flex;align-items:center;gap:24px}
-#back-btn{background:none;border:.5px solid var(--border-hover);border-radius:20px;color:var(--fg-dim);font-size:11px;letter-spacing:.05em;padding:8px 14px;flex-shrink:0;transition:all .2s;font-family:inherit;text-transform:lowercase}
-#back-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
-#planet-name{font-size:40px;font-weight:700;letter-spacing:.04em;line-height:1}
-
-#projects-section{padding:32px 0 64px}
-.filters-row{display:flex;align-items:flex-start;gap:16px;border-bottom:.5px solid var(--border);padding-bottom:12px;margin:0 var(--spacing) 20px}
-.filters-label{color:var(--fg-faint);font-size:10px;letter-spacing:.05em;flex-shrink:0;margin-top:6px}
-#tags-container{overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-height:500px;opacity:1}
-#tags-container.collapsed{max-height:0;opacity:0;pointer-events:none}
-#tags-list{display:flex;flex-wrap:wrap;gap:8px}
-.tag-filter{font-size:12px;letter-spacing:.01em;color:var(--fg-faint);cursor:var(--cur);transition:all .2s;padding:5px 12px;border:.5px solid var(--border-hover);border-radius:20px;line-height:1}
-.tag-filter:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.45)}
-.tag-filter.active{color:var(--fg);font-weight:500;border-color:#fff}
-#projects-label{font-size:11px;letter-spacing:.1em;color:var(--fg-faint);margin-bottom:16px;padding-left:var(--spacing)}
-#projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;align-items:start}
-
-.project-card{background:var(--bg);cursor:var(--cur);transition:border-color .2s,background .2s;text-decoration:none;display:block;border:.5px solid rgba(255,255,255,.1);overflow:hidden}
-.project-card:hover{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.05)}
-.project-img{width:100%;height:200px;object-fit:cover;border-bottom:.5px solid rgba(255,255,255,.1);display:block}
-.project-content{padding:24px}
-.project-tag{font-size:10px;letter-spacing:.06em;color:var(--fg-dim);margin-bottom:8px}
-.project-title{font-size:17px;font-weight:500;color:#fff;margin-bottom:8px;line-height:1.3}
-.project-desc{display:none}
-.project-arrow{font-size:11px;color:var(--fg-faint);margin-top:14px;display:block}
-.empty-state{padding:48px 0;font-size:10px;color:var(--fg-faint);letter-spacing:.05em}
-
-.planet-search-input {
-  background: none;
-  border: none;
-  border-bottom: 0.5px solid var(--border-hover);
-  color: var(--fg);
-  font-size: 9px;
-  letter-spacing: 0.05em;
-  padding: 4px 0;
-  width: 160px;
-  outline: none;
-  transition: width 0.3s ease, border-color 0.2s;
-}
-.planet-search-input:focus { border-color: rgba(255,255,255,0.5); width: 220px; }
-
+/* ==========================================================================
+   11. MEDIA QUERIES (RESPONSIVENESS)
+   ========================================================================== */
 @media (max-width: 900px) {
-  .project-table-header { display: none; }
+  .project-table-header { 
+    display: none; 
+  }
   .drawer-projects-grid .project-card {
     grid-template-columns: 1fr;
     gap: 12px;
