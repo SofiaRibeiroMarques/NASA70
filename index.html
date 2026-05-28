@@ -305,7 +305,10 @@ async function loadData(){
   try{
     const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
     data.forEach(p=>{
-      const imgArr = Array.isArray(p.immagine) ? p.immagine : [p.immagine];
+      let imgArr = Array.isArray(p.immagine) ? p.immagine : [p.immagine];
+      if (p.titolo && p.titolo.toLowerCase().includes('moonprint') && imgArr.length > 1) {
+        imgArr = [imgArr[1]];
+      }
       const proj={
         title:p.titolo,
         desc:p.descrizione,
