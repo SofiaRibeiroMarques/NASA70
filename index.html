@@ -306,7 +306,8 @@ async function loadData(){
     const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
     data.forEach(p=>{
       let imgArr = Array.isArray(p.immagine) ? p.immagine : [p.immagine];
-      if (p.titolo && p.titolo.toLowerCase().includes('moonprint') && imgArr.length > 1) {
+      // Se il progetto ha due immagini, carichiamo solo la seconda (solitamente quella quadrata)
+      if (imgArr.length === 2) {
         imgArr = [imgArr[1]];
       }
       const proj={
@@ -320,8 +321,8 @@ async function loadData(){
       const a=p.autore;
       const key=['Luca Mazzola'].includes(a)?'solarsystem':
         a==='Michelle Chicherio'?'sun':
-        ['Riccardo Vosti','Claudio Ceppi','Melissa Broggini','Davide Barattini'].includes(a)?'earth':
-        ['Sofia Ribeiro Marques','Daniele Falcone'].includes(a)?'moon':
+        ['Claudio Ceppi','Melissa Broggini','Davide Barattini'].includes(a)?'earth':
+        ['Sofia Ribeiro Marques','Daniele Falcone','Riccardo Vosti'].includes(a)?'moon':
         a==='Nahele Belli'?'mars':
         a==='Alissa Bionda'?'nebula':
         ['Carla De Gennaro','Laura Pantani'].includes(a)?'satellites':
