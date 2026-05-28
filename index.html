@@ -5,66 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NASA 70</title>
 <link rel="stylesheet" href="style.css">
-<style>
-  /* Impedisce lo scrolling verticale solo nella pagina della mappa */
-  #page-map {
-    position: relative;
-    overflow: hidden;
-    overscroll-behavior: none;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Rimuove la linea di separazione (border-bottom) sotto il logo solo nella mappa */
-  #page-map .site-header {
-    border-bottom: none;
-  }
-
-  /* Assicura che i titoli abbiano la maiuscola iniziale */
-  .project-title, .search-item-title {
-    text-transform: none !important;
-  }
-  .project-title::first-letter, .search-item-title::first-letter {
-    text-transform: none !important;
-  }
-
-  /* Forza il cursore astronauta su ogni singolo elemento della pagina */
-  html, body, *, svg, .planet-hit, .random-project-btn, #reset-map-btn {
-    cursor: var(--cur) !important;
-  }
-
-  /* Stile per il bottone di reset sulla mappa */
-  #reset-map-btn {
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    background: rgba(10, 9, 8, 0.6);
-    color: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: none;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
-    z-index: 10;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  #reset-map-btn.visible {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  #reset-map-btn:hover {
-    color: #000000;
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgb(255, 255, 255);
-  }
-</style>
 </head>
 <body>
 <div id="page-countdown">
