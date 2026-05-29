@@ -45,8 +45,6 @@ a, button, input, #site-logo {
   background: transparent;
   color: var(--fg-dim);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.08em;
   padding: 8px 16px;
   border: 0.5px solid var(--border-hover);
   border-radius: 20px;
@@ -242,7 +240,6 @@ svg#solar {
 .sidebar-label {
   font-size: 12px;
   text-transform: none;
-  letter-spacing: 0.15em;
   color: var(--fg-faint);
   margin-right: 0;
   opacity: 0.6;
@@ -250,7 +247,6 @@ svg#solar {
 
 .sidebar-item {
   font-size: 13px;
-  letter-spacing: 0.12em;
   color: var(--fg-faint);
   transition: color 0.2s ease, transform 0.2s ease;
   display: flex;
@@ -303,7 +299,6 @@ svg#solar {
 
 .cd-mission-label {
   font-size: 10px;
-  letter-spacing: 0.2em;
   color: rgba(255,255,255,0.25);
   margin-bottom: 6px;
   text-transform: none;
@@ -341,7 +336,6 @@ svg#solar {
 
 .cd-label-item {
   font-size: 10px;
-  letter-spacing: 0.15em;
   color: rgba(255, 255, 255, 0.3);
   margin-top: 10px;
   text-transform: uppercase;
@@ -357,8 +351,6 @@ svg#solar {
 
 #cd-status-msg {
   margin-top: 24px;
-  font-size: 10px;
-  letter-spacing: 0.2em;
   color: rgba(255,255,255,0.35);
   text-transform: none;
   height: 14px;
@@ -437,8 +429,6 @@ svg#solar {
   border: none;
   border-bottom: 0.5px solid var(--border-hover);
   color: var(--fg);
-  font-size: 9px;
-  letter-spacing: 0.05em;
   padding: 4px 0;
   width: 160px;
   outline: none;
@@ -491,7 +481,6 @@ svg#solar {
 .search-item-meta {
   font-size: 7px;
   color: var(--fg-dim);
-  letter-spacing: 0.01em;
   text-transform: none !important;
 }
 
@@ -513,8 +502,6 @@ svg#solar {
 }
 
 .list-intro-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
   color: var(--fg-faint);
 }
 
@@ -558,7 +545,6 @@ svg#solar {
 
 .planet-row-index {
   font-size: 12px;
-  letter-spacing: 0.06em;
   color: var(--fg-faint);
   display: flex;
   justify-content: flex-end;
@@ -592,7 +578,6 @@ svg#solar {
 .planet-row-sub {
   font-size: 12px;
   color: var(--fg-faint);
-  letter-spacing: 0.02em;
 }
 
 .planet-row-dist {
@@ -600,7 +585,6 @@ svg#solar {
   color: var(--fg-faint);
   font-variant-numeric: tabular-nums;
   text-align: right;
-  letter-spacing: 0.04em;
 }
 
 .planet-row-arrow {
@@ -655,7 +639,6 @@ svg#solar {
   gap: 32px;
   padding: 12px var(--spacing);
   font-size: 11px;
-  letter-spacing: 0.12em;
   text-transform: none;
   color: var(--fg-faint);
   border-bottom: 0.5px solid var(--border);
@@ -823,8 +806,6 @@ svg#solar {
 
 .filters-label {
   color: var(--fg-faint);
-  font-size: 10px;
-  letter-spacing: 0.05em;
   flex-shrink: 0;
   margin-top: 6px;
 }
@@ -849,8 +830,6 @@ svg#solar {
 }
 
 #projects-label {
-  font-size: 11px;
-  letter-spacing: 0.1em;
   color: var(--fg-faint);
   margin-bottom: 16px;
   padding-left: var(--spacing);
@@ -892,7 +871,6 @@ svg#solar {
 
 .project-tag {
   font-size: 10px;
-  letter-spacing: 0.06em;
   color: var(--fg-dim);
   margin-bottom: 8px;
   text-transform: capitalize !important;
@@ -923,9 +901,7 @@ svg#solar {
 
 .empty-state {
   padding: 48px 0;
-  font-size: 10px;
   color: var(--fg-faint);
-  letter-spacing: 0.05em;
 }
 
 @media (max-width: 900px) {
@@ -976,8 +952,6 @@ html, body, *, svg, .planet-hit, .random-project-btn, #reset-map-btn {
   border-radius: 20px;
   padding: 8px 14px;
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.05em;
   text-transform: none;
   transition: all 0.2s ease;
   backdrop-filter: blur(4px);
