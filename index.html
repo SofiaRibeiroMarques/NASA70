@@ -319,8 +319,7 @@ async function loadData(){
         imgs: imgArr.map(i => 'immagini/' + i),
         tags:p.tags};
       const a=p.autore;
-      const key=['Luca Mazzola'].includes(a)?'solarsystem':
-        a==='Michelle Chicherio'?'sun':
+      const key=['Luca Mazzola', 'Michelle Chicherio'].includes(a)?'solarsystem':
         ['Claudio Ceppi','Melissa Broggini','Davide Barattini'].includes(a)?'earth':
         ['Sofia Ribeiro Marques','Daniele Falcone','Riccardo Vosti'].includes(a)?'moon':
         a==='Nahele Belli'?'mars':
