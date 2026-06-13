@@ -364,8 +364,6 @@ svg#solar {
   position: absolute;
   bottom: 24px;
   right: 24px;
-  background: rgba(10, 9, 8, 0.6);
-  backdrop-filter: blur(4px);
 }
 
 /* ==========================================================================
