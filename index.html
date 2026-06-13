@@ -9,16 +9,15 @@
 <body>
 <div id="page-countdown">
   <div id="cd-flash"></div>
-  <div class="cd-mission-label">Mission</div>
-  <div class="cd-mission-name">Apollo 11 — Saturn V</div>
   <div id="cd-timer">
-    <div class="cd-unit"><span> - </span><span class="cd-label-item">HOUR</span></div>
+    <div class="cd-unit"><span>T-0</span><span class="cd-label-item">HOUR</span></div>
     <div class="cd-sep">:</div>
     <div class="cd-unit"><span>00</span><span class="cd-label-item">MINUTE</span></div>
     <div class="cd-sep">:</div>
     <div class="cd-unit"><span>10</span><span class="cd-label-item">SECOND</span></div>
   </div>
   <div id="cd-status-msg"></div>
+  <button id="cd-speed-btn">fast forward</button>
 </div>
 
 <div id="page-map" class="page visible">
@@ -306,10 +305,6 @@ async function loadData(){
     const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
     data.forEach(p=>{
       let imgArr = Array.isArray(p.immagine) ? p.immagine : [p.immagine];
-      // Se il progetto ha due immagini, carichiamo solo la seconda (solitamente quella quadrata)
-      if (imgArr.length === 2) {
-        imgArr = [imgArr[1]];
-      }
       const proj={
         title:p.titolo,
         desc:p.descrizione,
@@ -405,7 +400,7 @@ function toggleProjectAccordion(row, proj) {
     projDrawer.innerHTML = `
       <div class="project-details-inner">
         <div class="project-detail-images">
-          ${proj.imgs.slice(0, 2).map(imgSrc => `<img src="${imgSrc}" class="project-detail-img" onerror="this.style.display='none'">`).join('')}
+          <img src="${proj.imgs[0]}" class="project-detail-img" onerror="this.style.display='none'">
         </div>
       </div>`;
     setTimeout(() => {
@@ -610,15 +605,24 @@ document.addEventListener('click',e=>{
   const timerEl  = document.getElementById('cd-timer');
   const msgEl    = document.getElementById('cd-status-msg');
   const flashEl  = document.getElementById('cd-flash');
+  const speedBtn = document.getElementById('cd-speed-btn');
 
   let totalSec = 11; // T–00:10 (Inizio sequenza video)
+  let tickDelay = 1000;
+
+  speedBtn.addEventListener('click', () => {
+    tickDelay = 250;
+    speedBtn.style.opacity = '0';
+    speedBtn.style.pointerEvents = 'none';
+  });
 
   function fmt(s) {
     if (s <= 0) return 'IGNITION';
-    const m   = Math.floor(s / 60);
+    const h   = Math.floor(s / 3600);
+    const m   = Math.floor((s % 3600) / 60);
     const sec = s % 60;
     return `
-      <div class="cd-unit"><span>-</span><span class="cd-label-item">HOUR</span></div>
+      <div class="cd-unit"><span>T-${h}</span><span class="cd-label-item">HOUR</span></div>
       <div class="cd-sep">:</div>
       <div class="cd-unit"><span>${String(m).padStart(2,'0')}</span><span class="cd-label-item">MINUTE</span></div>
       <div class="cd-sep">:</div>
@@ -635,6 +639,7 @@ document.addEventListener('click',e=>{
   ];
 
   function launch() {
+    speedBtn.style.display = 'none';
     timerEl.innerHTML = 'LIFTOFF';
     timerEl.style.letterSpacing = '0.06em';
     timerEl.classList.remove('cd-final','cd-urgent');
@@ -659,7 +664,7 @@ document.addEventListener('click',e=>{
     events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
     if (totalSec <= 0) { launch(); return; }
     timerEl.innerHTML = fmt(totalSec);
-    setTimeout(tick, 1000);
+    setTimeout(tick, tickDelay);
   }
 
   setTimeout(tick, 500);
