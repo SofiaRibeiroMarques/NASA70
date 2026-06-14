@@ -359,6 +359,7 @@ function showPlanet(key,rowEl,forceOpen=false){
   if(!d.projects.length)return;
   drawer.innerHTML=`<div class="drawer-content">
     <div class="project-table-header">
+      <div class="project-alignment-spacer"></div>
       <div>Title</div>
       <div>Author</div>
       <div>Note</div>
@@ -367,6 +368,7 @@ function showPlanet(key,rowEl,forceOpen=false){
     <div class="drawer-projects-grid">
       ${d.projects.map((p, i)=>`
         <div class="project-card" data-index="${i}" style="cursor:pointer">
+          <div class="project-alignment-spacer"></div>
           <div class="project-title">${p.title}</div>
           <div class="project-tag">by ${p.tag}</div>
           <div class="project-desc-cell">${p.desc || ''}</div>
@@ -399,6 +401,7 @@ function toggleProjectAccordion(row, proj) {
     row.parentNode.querySelectorAll('.project-card, .project-list-row').forEach(r => r.classList.remove('active-card'));
     projDrawer.innerHTML = `
       <div class="project-details-inner">
+        <div class="project-alignment-spacer"></div>
         <div class="project-detail-images">
           <img src="${proj.imgs[0]}" class="project-detail-img" onerror="this.style.display='none'">
         </div>
@@ -611,7 +614,7 @@ document.addEventListener('click',e=>{
   let tickDelay = 1000;
 
   speedBtn.addEventListener('click', () => {
-    tickDelay = 250;
+    tickDelay = 50;
     speedBtn.style.opacity = '0';
     speedBtn.style.pointerEvents = 'none';
   });
