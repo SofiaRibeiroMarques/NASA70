@@ -303,15 +303,18 @@ function getProjectIcon(tags = []) {
 async function loadData(){
   try{
     const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
+    const imgBase = 'https://ixd-supsi.github.io/n70api/immagini/';
+
     data.forEach(p=>{
-      let imgArr = Array.isArray(p.immagine) ? p.immagine : [p.immagine];
+      let imgArr = Array.isArray(p.immagine) ? p.immagine : (p.immagine ? [p.immagine] : []);
+      
       const proj={
         title:p.titolo,
         desc:p.descrizione,
         tag:p.autore,
         link:p.url,
-        img:'immagini/'+imgArr[0],
-        imgs: imgArr.map(i => 'immagini/' + i),
+        img: imgArr.length ? imgBase + imgArr[0] : '',
+        imgs: imgArr.map(i => imgBase + i),
         tags:p.tags};
       const a=p.autore;
       const key=['Luca Mazzola', 'Michelle Chicherio'].includes(a)?'solarsystem':
