@@ -9,7 +9,6 @@
   --border: rgba(255, 255, 255, 0.1);
   --border-hover: rgba(255, 255, 255, 0.28);
   --spacing: 28px;
-  --cur: url('immagini/astronaut.png') 16 16, auto;
 }
 
 * {
