@@ -17,7 +17,7 @@
     <div class="cd-unit"><span>10</span><span class="cd-label-item">SECOND</span></div>
   </div>
   <div id="cd-status-msg"></div>
-  <button id="cd-speed-btn">fast forward</button>
+  <button id="cd-speed-btn">Skip</button>
 </div>
 
 <div id="page-map" class="page visible">
@@ -26,7 +26,7 @@
       <img id="site-logo" src="assets/logo/logo_nasa_02.png" alt="NASA 70 Logo">
     </div>
     <div class="site-header-right">
-      <button class="random-project-btn">Random Project</button>
+      <button class="random-project-btn">Random project</button>
     </div>
   </header>
 
@@ -180,7 +180,7 @@
   </div>
   
   <!-- NUOVO BOTTONE DI RESET INSERITO NELLA MAPPA -->
-  <button id="reset-map-btn">Reset View Map</button>
+  <button id="reset-map-btn">Reset view map</button>
 </div>
 
 <div id="page-list" class="page hidden">
@@ -227,7 +227,7 @@
         <input type="text" id="search-input-planet" class="planet-search-input" placeholder="search projects…" autocomplete="off">
         <div id="search-results-planet" class="search-results"></div>
       </div>
-      <button class="random-project-btn">&#8594; RANDOM PROJECT</button>
+      <button class="random-project-btn">&#8594; Random project</button>
     </div>
   </header>
   <div id="planet-header">
@@ -626,7 +626,6 @@ document.addEventListener('click',e=>{
   });
 
   function fmt(s) {
-    if (s <= 0) return 'IGNITION';
     const h   = Math.floor(s / 3600);
     const m   = Math.floor((s % 3600) / 60);
     const sec = s % 60;
@@ -646,15 +645,15 @@ document.addEventListener('click',e=>{
   const events = [
     { at: 10, fn: () => { setMsg('Guidance is internal'); } },
     { at: 8,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
-    { at: 3,  fn: () => { timerEl.classList.add('cd-final'); } },
-    { at: 1,  fn: () => { setMsg('All engines running'); } },
+    { at: 3,  fn: () => { timerEl.classList.add('cd-warning'); } },
+    { at: 1,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
   ];
 
   function launch() {
     speedBtn.style.display = 'none';
     timerEl.innerHTML = 'LIFTOFF';
     timerEl.style.letterSpacing = '0.06em';
-    timerEl.classList.remove('cd-final','cd-urgent');
+    timerEl.classList.remove('cd-final','cd-urgent','cd-warning');
     timerEl.style.color = '#fff';
     setMsg('We have a liftoff');
 
@@ -675,8 +674,12 @@ document.addEventListener('click',e=>{
     totalSec--;
     events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
 
-    if (totalSec <= 0) { launch(); return; }
     if (timerEl) timerEl.innerHTML = fmt(totalSec);
+
+    if (totalSec <= 0) {
+      setTimeout(launch, tickDelay); // Aspetta un secondo mostrando 00:00:00 prima del decollo
+      return;
+    }
     setTimeout(tick, tickDelay);
   }
 
