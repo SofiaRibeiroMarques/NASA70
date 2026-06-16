@@ -131,7 +131,7 @@ function showPlanet(key,rowEl,forceOpen=false){
           <div class="project-title">${p.title}</div>
           <div class="project-tag">by ${p.tag}</div>
           <div class="project-desc-cell">${p.desc || ''}</div>
-          <div><a href="${p.link}" target="_blank" class="visit-btn" onclick="event.stopPropagation()">visit project</a></div>
+          <div><a href="${p.link}" target="_blank" class="visit-btn" onclick="event.stopPropagation()">Visit project</a></div>
         </div>`).join('')}
     </div>
   </div>`;
