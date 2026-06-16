@@ -646,7 +646,8 @@ document.addEventListener('click',e=>{
   const events = [
     { at: 10, fn: () => { setMsg('Guidance is internal'); } },
     { at: 8,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
-    { at: 1,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
+    { at: 3,  fn: () => { timerEl.classList.add('cd-final'); } },
+    { at: 1,  fn: () => { setMsg('All engines running'); } },
   ];
 
   function launch() {
