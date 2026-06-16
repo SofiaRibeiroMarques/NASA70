@@ -344,13 +344,6 @@ svg#solar {
   text-transform: uppercase;
 }
 
-#cd-timer.cd-urgent { color: #ffffff; }
-#cd-timer.cd-final { animation: cd-blink 0.5s step-end infinite; color: #ff3b30; }
-
-@keyframes cd-blink {
-  0%,100% { color: #ff3b30; opacity: 1; }
-  50%      { color: #ff3b30; opacity: 0.25; }
-}
 
 #cd-status-msg {
   margin-top: 60px;
