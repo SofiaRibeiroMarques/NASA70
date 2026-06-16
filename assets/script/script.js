@@ -32,27 +32,6 @@ const planetIcons = {
   deepspace: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>`
 };
 
-const typeIcons = {
-  code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`,
-  visual: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`,
-  interaction: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"></path></svg>`,
-  data: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`,
-  audio: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`,
-  three: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`,
-  default: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
-};
-
-function getProjectIcon(tags = []) {
-  const t = tags.map(v => v.toLowerCase());
-  if (t.some(tag => ['codice', 'programmazione', 'p5.js', 'javascript', 'generativo'].includes(tag))) return typeIcons.code;
-  if (t.some(tag => ['video', 'visuale', 'animazione', 'cinema', 'narrazione', 'storia'].includes(tag))) return typeIcons.visual;
-  if (t.some(tag => ['interazione', 'interaction', 'gioco', 'game', 'ux', 'esperimento'].includes(tag))) return typeIcons.interaction;
-  if (t.some(tag => ['dati', 'data', 'mappa', 'visualization', 'visualizzazione', 'grafico'].includes(tag))) return typeIcons.data;
-  if (t.some(tag => ['audio', 'suono', 'sound', 'musica', 'ambiente'].includes(tag))) return typeIcons.audio;
-  if (t.some(tag => ['3d', 'modelli', 'three.js', 'vr', 'spazio'].includes(tag))) return typeIcons.three;
-  return typeIcons.default;
-}
-
 async function loadData(){
   try{
     const data=await(await fetch('https://ixd-supsi.github.io/n70api/data.json')).json();
@@ -170,34 +149,6 @@ function toggleProjectAccordion(row, proj) {
       row.classList.add('active-card');
     }, 10);
   }
-}
-
-function renderPlanetProjects(key) {
-  const d = planets[key];
-  const grid = document.getElementById('projects-grid');
-  const nameEl = document.getElementById('planet-name');
-  
-  if (!d) return;
-  nameEl.textContent = d.name;
-  
-  grid.innerHTML = d.projects.length 
-    ? d.projects.map((p, i) => `
-        <div class="project-list-row" data-index="${i}" style="cursor:pointer">
-          <div class="project-alignment-spacer"></div>
-          <div class="project-list-row-info">
-            <span class="project-list-row-name">${p.title}</span>
-            <span class="project-list-row-sub">by ${p.tag}</span>
-          </div>
-          <span class="project-list-row-arrow">&#8594;</span>
-        </div>`).join('')
-    : '<div class="empty-state">No projects found for this destination.</div>';
-
-  grid.querySelectorAll('.project-list-row').forEach(row => {
-    row.addEventListener('click', () => {
-      const proj = d.projects[row.dataset.index];
-      toggleProjectAccordion(row, proj);
-    });
-  });
 }
 
 document.querySelectorAll('.planet-row[data-planet]').forEach(row=>{
@@ -342,14 +293,13 @@ document.addEventListener('click',e=>{
 (function() {
   const screen   = document.getElementById('page-countdown');
   const timerEl  = document.getElementById('cd-timer');
-  const msgEl    = document.getElementById('cd-status-msg');
   const flashEl  = document.getElementById('cd-flash');
   const speedBtn = document.getElementById('cd-speed-btn');
-  let totalSec = 11; 
+  let totalSec = 6; 
   let tickDelay = 1000;
 
   speedBtn.addEventListener('click', () => {
-    tickDelay = 50;
+    tickDelay = 75; // Rallentato a 1.5x (da 50ms a 75ms)
     speedBtn.style.opacity = '0';
     speedBtn.style.pointerEvents = 'none';
   });
@@ -364,22 +314,16 @@ document.addEventListener('click',e=>{
       <div class="cd-unit"><span>${String(sec).padStart(2,'0')}</span><span class="cd-label-item">SECOND</span></div>`;
   }
 
-  function setMsg(m) { if(msgEl) msgEl.textContent = m; }
-
   const events = [
-    { at: 10, fn: () => { setMsg('Guidance is internal'); } },
-    { at: 8,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
+    { at: 5,  fn: () => { timerEl.classList.add('cd-urgent'); } },
     { at: 3,  fn: () => { timerEl.classList.add('cd-warning'); } },
-    { at: 1,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
+    { at: 1,  fn: () => { timerEl.classList.add('cd-final'); } },
   ];
 
   function launch() {
     speedBtn.style.display = 'none';
-    timerEl.innerHTML = 'LIFTOFF';
-    timerEl.style.letterSpacing = '0.06em';
     timerEl.classList.remove('cd-final','cd-urgent','cd-warning');
     timerEl.style.color = '#fff';
-    setMsg('We have a liftoff');
     setTimeout(() => {
       if(flashEl) flashEl.classList.add('go');
       setTimeout(() => {
