@@ -317,7 +317,7 @@ async function loadData(){
         imgs: imgArr.map(i => imgBase + i),
         tags:p.tags};
       const a=p.autore;
-      const key=['Luca Mazzola', 'Michelle Chicherio'].includes(a)?'solarsystem':
+      const key=['Luca Mazzola', 'Michelle Chicherio'].includes(a)?'sun':
         ['Claudio Ceppi','Melissa Broggini','Davide Barattini'].includes(a)?'earth':
         ['Sofia Ribeiro Marques','Daniele Falcone','Riccardo Vosti'].includes(a)?'moon':
         a==='Nahele Belli'?'mars':
@@ -359,7 +359,10 @@ function showPlanet(key,rowEl,forceOpen=false){
   }
   if(drawer.classList.contains('open')&&!forceOpen){drawer.classList.remove('open');return}
   const d=planets[key];
-  if(!d.projects.length)return;
+  if(!d || !d.projects.length) {
+    console.warn("No projects for:", key);
+    return;
+  }
   drawer.innerHTML=`<div class="drawer-content">
     <div class="project-table-header">
       <div class="project-alignment-spacer"></div>
@@ -638,10 +641,12 @@ document.addEventListener('click',e=>{
 
   function setMsg(m) { if(msgEl) msgEl.textContent = m; }
 
+  // Sincronizzazione con audio_countdown.mp3:
+  // 0s: 10,9 | 2s (T-8): Ignition | 9s (T-1): All engines running
   const events = [
     { at: 10, fn: () => { setMsg('Guidance is internal'); } },
-    { at: 9,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
-    { at: 3,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
+    { at: 8,  fn: () => { setMsg('Ignition sequence start'); timerEl.classList.add('cd-urgent'); } },
+    { at: 1,  fn: () => { setMsg('All engines running'); timerEl.classList.add('cd-final'); } },
   ];
 
   function launch() {
@@ -668,12 +673,15 @@ document.addEventListener('click',e=>{
   function tick() {
     totalSec--;
     events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
+
     if (totalSec <= 0) { launch(); return; }
-    timerEl.innerHTML = fmt(totalSec);
+    if (timerEl) timerEl.innerHTML = fmt(totalSec);
     setTimeout(tick, tickDelay);
   }
 
-  setTimeout(tick, 500);
+  // Se l'audio viene bloccato, il primo click dell'utente sulla pagina lo sblocca "al volo"
+  // Avvio immediato della sequenza al caricamento
+  tick();
 })();
 </script>
 </body>
