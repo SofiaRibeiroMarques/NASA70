@@ -41,7 +41,8 @@ a, button, input, #site-logo {
 .random-project-btn, 
 #back-btn, 
 .tag-filter,
-#cd-speed-btn {
+#cd-speed-btn,
+.nasa-plus-btn {
   display: inline-block;
   background: transparent;
   color: var(--fg-dim);
@@ -65,7 +66,8 @@ a, button, input, #site-logo {
 #back-btn:hover, 
 .tag-filter:hover,
 #cd-speed-btn:hover,
-.tag-filter.active {
+.tag-filter.active,
+.nasa-plus-btn:hover {
   background: var(--fg) !important;       /* Sfondo bianco puro */
   color: var(--bg) !important;             /* Testo scuro del background */
   border-color: var(--fg) !important;
@@ -404,7 +406,7 @@ svg#solar {
 }
 
 #site-logo {
-  height: 60px;
+  height: 65px;
   width: auto;
   display: block;
   padding: 0;
@@ -518,7 +520,7 @@ svg#solar {
 
 .planet-row {
   display: grid;
-  grid-template-columns: 24px 1fr 120px 24px;
+  grid-template-columns: 24px 1fr 110px;
   align-items: center;
   gap: 0 8px;
   padding: 14px var(--spacing);
@@ -531,10 +533,6 @@ svg#solar {
 
 .planet-row:hover {
   background: rgba(255, 255, 255, 0.03);
-}
-
-.planet-row:hover .planet-row-arrow {
-  opacity: 1;
 }
 
 .planet-row:hover .planet-row-name {
@@ -582,14 +580,7 @@ svg#solar {
   color: var(--fg-faint);
   font-variant-numeric: tabular-nums;
   text-align: right;
-}
-
-.planet-row-arrow {
-  font-size: 12px;
-  color: var(--fg-dim);
-  opacity: 0;
-  transition: opacity 0.15s;
-  text-align: center;
+  padding-right: 16px; /* Allinea la lettera finale con il testo del bottone "Visit project" */
 }
 
 
