@@ -395,11 +395,22 @@ document.addEventListener('click',e=>{
   function tick() {
     totalSec--;
     events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
-    if (timerEl) timerEl.innerHTML = fmt(totalSec);
+
     if (totalSec <= 0) {
-      setTimeout(launch, Math.min(tickDelay, 300));
+      if (timerEl) {
+        const firstNum = timerEl.querySelector('.cd-unit span');
+        const currentSize = firstNum ? window.getComputedStyle(firstNum).fontSize : '4rem';
+
+        timerEl.style.minHeight = timerEl.offsetHeight + 'px';
+        timerEl.style.display = 'flex';
+        timerEl.style.alignItems = 'center';
+        timerEl.style.justifyContent = 'center';
+        timerEl.innerHTML = `<span style="font-size: ${currentSize}; font-weight: normal; letter-spacing: 0.1em; color: #fff;">LIFTOFF</span>`;
+      }
+      setTimeout(launch, 800);
       return;
     }
+    if (timerEl) timerEl.innerHTML = fmt(totalSec);
     setTimeout(tick, tickDelay);
   }
   tick();
