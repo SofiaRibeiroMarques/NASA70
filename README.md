@@ -23,9 +23,9 @@ Per la pagina dell'archivio, ho deciso di organizzare gli elementi seguendo una 
 ## Design dell’interfaccia e modalità di interazione
 Il sito utilizza un layout basato su una navigazione lineare. La struttura è progettata per simulare un viaggio spaziale, accompagnando l’utente attraverso le diverse fasi dell’esperienza.
 L’interazione inizia con un countdown e "liftoff" che introduce il tema della missione spaziale. Successivamente, l’utente raggiunge una mappa interattiva del sistema solare e del deep space, dove può scegliere liberamente la propria destinazione.
-Ogni pianeta o elemento spaziale rappresenta una categoria e permette di accedere ai relativi progetti. Se uno di questi elementi viene cliccato, l'utente verrä portato alla pagina d'archivio dove gli verrä mostrato tutti i progetti relativi al pianeta che precedentemente ha selezionato.
+Ogni pianeta o elemento spaziale rappresenta una categoria e permette di accedere ai relativi progetti. Se uno di questi elementi viene cliccato, l'utente verrà portato alla pagina d'archivio dove gli verrà mostrato tutti i progetti relativi al pianeta che precedentemente ha selezionato.
 
-Uno degli elementi centrali del progetto è proprio la mappa interattiva, che trasforma l’archivio in uno spazio esplorabile. Invece di cercare i contenuti tramite menu tradizionali, l’utente esplora il sito scegliendo direttamente una destinazione.
+Uno degli elementi centrali del progetto è la mappa interattiva, che trasforma l’archivio in uno spazio esplorabile. Invece di cercare i contenuti tramite menu tradizionali, l’utente esplora il sito scegliendo direttamente una destinazione.
 
 
 <img width="1511" height="846" alt="Ribeiro_Sofia_Countdown" src="https://github.com/user-attachments/assets/b44aaf38-862e-4588-8ceb-7d4e21f4cc74" />
@@ -40,7 +40,7 @@ https://github.com/user-attachments/assets/51127802-da7b-483b-911d-fed97a54e85e
 
 
 ## Tecnologia usata
-A differenza di altri archivi digitali, il sito che ho realizzato utilizza un sistema di filtraggio "nascosto, ovvero la mappa interattiva, permettendo all’utente di selezionare e esplorare i contenuti in maniera più immediata in base alle proprie scelte, senza dover scrollare in continuazione per trovare il progetto che gli interessa visitare. Questa logica migliora l’esperienza utente e rende la navigazione più fluida, immediata e immersiva.
+A differenza di altri archivi, il sito che ho realizzato utilizza un sistema di filtraggio "nascosto", ovvero la mappa interattiva, permettendo all’utente di selezionare e esplorare i contenuti in maniera più immediata in base alle proprie scelte, senza dover scrollare in continuazione per trovare il progetto che gli interessa visitare. Questa logica migliora l’esperienza utente e rende la navigazione più fluida, immediata e immersiva.
 
 
 ```JavaScript
