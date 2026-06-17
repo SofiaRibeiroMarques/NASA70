@@ -49,13 +49,13 @@ async function loadData(){
         imgs: imgArr.map(i => imgBase + i),
         tags:p.tags};
       const a=p.autore;
-      const key=['Luca Mazzola', 'Michelle Chicherio'].includes(a)?'sun':
+      const key=a==='Luca Mazzola'?'solarsystem':
         ['Claudio Ceppi','Melissa Broggini','Davide Barattini'].includes(a)?'earth':
         ['Sofia Ribeiro Marques','Daniele Falcone','Riccardo Vosti'].includes(a)?'moon':
         a==='Nahele Belli'?'mars':
         a==='Alissa Bionda'?'nebula':
         ['Carla De Gennaro','Laura Pantani'].includes(a)?'satellites':
-        a==='Djordja Krsteva'?'deepspace':null;
+        ['Michelle Chicherio','Djordja Krsteva'].includes(a)?'deepspace':null;
       if(key&&planets[key])planets[key].projects.push(proj);
     });
     document.querySelectorAll('.planet-row[data-planet]').forEach(row=>{
