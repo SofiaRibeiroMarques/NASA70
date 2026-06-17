@@ -60,16 +60,16 @@ a, button, #site-logo {
 .tag-filter.active,
 .nasa-plus-btn:hover,
 #back-btn:hover { /* Aggiunto #back-btn:hover qui per coerenza */
-  background: var(--fg) !important;
-  color: var(--bg) !important;
-  border-color: var(--fg) !important;
-  font-weight: 400 !important;
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+  font-weight: 400;
 }
 
 .info-btn, #cd-speed-btn {
-  background: var(--fg) !important;
-  color: var(--bg) !important;
-  border-color: var(--fg) !important;
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
 }
 
 .info-btn:hover, #cd-speed-btn:hover {
@@ -119,26 +119,26 @@ svg#solar {
 .planet-hit[data-planet="solarsystem"]:hover g,
 .planet-hit[data-planet="deepspace"]:hover g,
 .planet-hit[data-planet="nebula"]:hover g {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .planet-hit:hover .ring {
-  fill: #fff !important;
-  opacity: 1 !important;
-  stroke: none !important;
+  fill: #fff;
+  opacity: 1;
+  stroke: none;
 }
 
 .planet-hit:has(.ring):hover circle:not(.glow):not(.ring):not([cx]):not([cy]) {
-  fill: #0a0908 !important;
-  stroke: none !important;
-  opacity: 1 !important;
+  fill: #0a0908;
+  stroke: none;
+  opacity: 1;
 }
 
 .planet-hit:has(.ring):hover line,
 .planet-hit:has(.ring):hover path {
-  stroke: #0a0908 !important;
-  fill: none !important;
-  opacity: 1 !important;
+  stroke: #0a0908;
+  fill: none;
+  opacity: 1;
 }
 
 .planet-hit:hover ellipse,
@@ -146,38 +146,38 @@ svg#solar {
 .planet-hit:hover circle[cy] {
   stroke: #fff;
   fill: none;
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .planet-hit:not(:has(.ring)):hover path,
 .planet-hit:not(:has(.ring)):hover circle:not(.glow):not(.hit-area) {
   stroke: #fff;
   fill: #fff;
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .planet-hit:hover text {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 /* Specific overrides per icone tecniche (Solar System, Deep Space) */
 .planet-hit[data-planet="solarsystem"]:hover circle,
 .planet-hit[data-planet="deepspace"]:hover circle:not(.hit-area),
 .planet-hit[data-planet="deepspace"]:hover text {
-  opacity: 1 !important;
+  opacity: 1;
 }
 .planet-hit[data-planet="solarsystem"]:hover circle[fill="none"],
 .planet-hit[data-planet="deepspace"]:hover circle[fill="none"]:not(.hit-area) {
-  fill: none !important;
-  stroke: #fff !important;
+  fill: none;
+  stroke: #fff;
 }
 .planet-hit[data-planet="solarsystem"]:hover circle[fill="#fff"],
 .planet-hit[data-planet="deepspace"]:hover circle[fill="#fff"] {
-  fill: #fff !important;
-  stroke: none !important; 
+  fill: #fff;
+  stroke: none; 
 }
 .planet-hit[data-planet="deepspace"]:hover ellipse {
-  fill: none !important;
+  fill: none;
 }
 .planet-hit[data-planet="solarsystem"]:hover line,
 .planet-hit[data-planet="solarsystem"]:hover ellipse,
@@ -185,16 +185,16 @@ svg#solar {
 .planet-hit[data-planet="deepspace"]:hover line,
 .planet-hit[data-planet="deepspace"]:hover ellipse,
 .planet-hit[data-planet="deepspace"]:hover path {
-  stroke: #fff !important;
-  fill: none !important;
-  opacity: 1 !important;
+  stroke: #fff;
+  fill: none;
+  opacity: 1;
 }
 
 /* Rimozione bordi da Deep Space e aree di clic */
 .planet-hit[data-planet="deepspace"]:hover circle,
 .hit-area {
-  stroke: none !important;
-  stroke-width: 0 !important;
+  stroke: none;
+  stroke-width: 0;
 }
 
 /* ==========================================================================
@@ -414,7 +414,7 @@ svg#solar {
   align-items: flex-end;
 }
 
-.search-input, .planet-search-input {
+.search-input {
   background: none;
   border: 0.5px solid var(--border-hover);
   border-radius: 20px;
@@ -428,7 +428,7 @@ svg#solar {
   transition: width 0.3s ease, border-color 0.2s, background 0.2s;
 }
 
-.search-input:focus, .planet-search-input:focus {
+.search-input:focus {
   border-color: var(--fg);
   width: 220px;
   background: rgba(255, 255, 255, 0.05);
@@ -740,60 +740,8 @@ svg#solar {
 
 .planet-drawer .project-card.active-card,
 .project-list-row.active-card {
-  background: rgba(162, 162, 162, 0.04) !important;
-  border-bottom: none !important;
-}
-
-#planet-header {
-  padding: 32px var(--spacing) 20px;
-  border-bottom: 0.5px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-#planet-name {
-  font-size: 40px;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-
-#projects-section {
-  padding: 32px 0 64px;
-}
-
-.filters-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  border-bottom: 0.5px solid var(--border);
-  padding-bottom: 12px;
-  margin: 0 var(--spacing) 20px;
-}
-
-.filters-label {
-  color: var(--fg-faint);
-  flex-shrink: 0;
-  margin-top: 6px;
-}
-
-#tags-container {
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
-  max-height: 500px;
-  opacity: 1;
-}
-
-#tags-container.collapsed {
-  max-height: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-#tags-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  background: rgba(162, 162, 162, 0.04);
+  border-bottom: none;
 }
 
 #projects-label {
@@ -883,10 +831,7 @@ svg#solar {
 
 
 .project-title, .search-item-title {
-  text-transform: none !important;
-}
-.project-title::first-letter, .search-item-title::first-letter {
-  text-transform: none !important;
+  text-transform: none;
 }
 
 
