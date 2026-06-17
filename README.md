@@ -83,10 +83,12 @@ async function loadData(){
   }catch(e){console.error('Error loading data:',e)}
 }
 ```
+
 ## Progettazione logo
 Per quanto riguarda il logo che ho realizzato, ho deciso di renderlo coerente con la narrazione del sito. Visto che all’interno del sito l’utente può “diventare” un astronauta, ho deciso di inserire i due numeri (7 e 0) all’interno di due caschi da astronauta. Non solo perché volevo associare un numero a ciascun casco, ma anche per rappresentare il fatto che, in una missione spaziale, non c’è mai un solo astronauta a bordo.
 
-<img width="2062" height="1463" alt="logo_nasa" src="https://github.com/user-attachments/assets/6b46a2f0-5401-43ff-ad0a-65a104147b3a" />
+<img width="314" height="203" alt="logo" src="https://github.com/user-attachments/assets/eaca686e-d92a-4361-bc21-858759584653" />
+
 
 
 ## Target e contesto d’uso
