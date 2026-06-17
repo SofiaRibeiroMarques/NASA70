@@ -130,6 +130,12 @@ function toggleProjectAccordion(row, proj) {
     projDrawer = document.createElement('div');
     projDrawer.className = 'project-details-drawer';
     row.parentNode.insertBefore(projDrawer, row.nextSibling);
+
+    // Chiude il dettaglio quando si clicca all'interno del drawer (es. sulla foto)
+    projDrawer.addEventListener('click', () => {
+      projDrawer.classList.remove('open');
+      row.classList.remove('active-card');
+    });
   }
   if (projDrawer.classList.contains('open')) {
     projDrawer.classList.remove('open');
