@@ -95,8 +95,8 @@ function showPlanet(key,rowEl,forceOpen=false){
     console.warn("No projects for:", key);
     return;
   }
-  drawer.innerHTML=`<div class="drawer-content">
-    <div class="project-table-header">
+  drawer.innerHTML=`<div class="drawer-content" style="padding-top: 30px;">
+    <div class="project-table-header" style="padding-top: 0; margin-top: 0;">
       <div class="project-alignment-spacer"></div>
       <div>Title</div>
       <div>Author</div>
