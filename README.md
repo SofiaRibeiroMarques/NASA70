@@ -1,4 +1,3 @@
-<img width="1511" height="846" alt="Ribeiro_Sofia_Countdown" src="https://github.com/user-attachments/assets/265db036-0a71-4f18-bff7-36b3c6605dc2" />
 SUPSI 2026  
 Corso d’interaction design, CV429.01  
 Docenti: A. Gysin, G. Profeta  
