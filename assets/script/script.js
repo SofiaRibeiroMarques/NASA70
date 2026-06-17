@@ -182,28 +182,53 @@ function getAllProjects(){
 
 document.querySelectorAll('#site-logo').forEach(logo=>logo.addEventListener('click',()=>showView('page-map')));
 
-function buildSearch(inputId,resultsId){
-  const input=document.getElementById(inputId),results=document.getElementById(resultsId);
-  if(!input||!results)return;
+function buildSearch(inputId){
+  const input=document.getElementById(inputId);
+  if(!input)return;
+
   input.addEventListener('input',e=>{
     const q=e.target.value.toLowerCase().trim();
-    if(q.length<2){results.classList.remove('visible');return}
-    const filtered=getAllProjects().filter(p=>
-      p.title.toLowerCase().includes(q)||p.tag.toLowerCase().includes(q)||
-      (p.desc&&p.desc.toLowerCase().includes(q))||(p.tags&&p.tags.some(t=>t.toLowerCase().includes(q)))
-    );
-    results.innerHTML=filtered.length
-      ?filtered.map(p=>`<div class="search-item" onclick="window.open('${p.link}','_blank')">
-          <div class="search-item-title">${p.title}</div>
-          <div class="search-item-meta">${p.tag} &middot; ${planets[p.planetKey].name}</div>
-          ${p.desc?`<div class="search-item-desc">${p.desc}</div>`:''}
-        </div>`).join('')
-      :'<div style="padding:12px;font-size:9px;color:rgba(255,255,255,.25);letter-spacing:.04em">no results</div>';
-    results.classList.add('visible');
+
+    if (inputId === 'search-input') {
+      // FILTRO PAGINA ARCHIVIO (Lista Pianeti)
+      const rows = document.querySelectorAll('.planet-row');
+      const categories = document.querySelectorAll('.list-category');
+
+      rows.forEach(row => {
+        const key = row.dataset.planet;
+        const pData = planets[key];
+        const match = !q || 
+                      pData.name.toLowerCase().includes(q) || 
+                      pData.projects.some(proj => 
+                        proj.title.toLowerCase().includes(q) || 
+                        proj.tag.toLowerCase().includes(q)
+                      );
+        row.style.display = match ? 'grid' : 'none';
+      });
+
+      // Nascondi le categorie (Solar System, Beyond) se non hanno pianeti visibili
+      categories.forEach(cat => {
+        let next = cat.nextElementSibling;
+        let hasVisible = false;
+        while (next && next.classList.contains('planet-row')) {
+          if (next.style.display !== 'none') hasVisible = true;
+          next = next.nextElementSibling;
+        }
+        cat.style.display = hasVisible ? 'block' : 'none';
+      });
+
+    } else if (inputId === 'search-input-planet') {
+      // FILTRO PAGINA PIANETA (Griglia Progetti)
+      const cards = document.querySelectorAll('#projects-grid .project-card');
+      cards.forEach(card => {
+        const match = !q || card.innerText.toLowerCase().includes(q);
+        card.style.display = match ? 'block' : 'none';
+      });
+    }
   });
 }
-buildSearch('search-input','search-results');
-buildSearch('search-input-planet','search-results-planet');
+buildSearch('search-input');
+buildSearch('search-input-planet');
 
 document.addEventListener('click',e=>{
   if(!e.target.closest('.search-wrap'))
