@@ -1,3 +1,4 @@
+<img width="1511" height="846" alt="Ribeiro_Sofia_Countdown" src="https://github.com/user-attachments/assets/265db036-0a71-4f18-bff7-36b3c6605dc2" />
 SUPSI 2026  
 Corso d’interaction design, CV429.01  
 Docenti: A. Gysin, G. Profeta  
@@ -30,6 +31,9 @@ Uno degli elementi centrali del progetto è proprio la mappa interattiva, che tr
 
 
 https://github.com/user-attachments/assets/76ad88b1-7b67-41c1-b0ed-f97d225c571c
+<img width="1511" height="846" alt="Ribeiro_Sofia_Countdown" src="https://github.com/user-attachments/assets/b44aaf38-862e-4588-8ceb-7d4e21f4cc74" />
+<img width="1511" height="846" alt="Ribeiro_Sofia_Map" src="https://github.com/user-attachments/assets/809fedc4-0014-41de-bf94-c30839efc632" />
+<img width="1511" height="846" alt="Ribeiro_Sofia__Archive" src="https://github.com/user-attachments/assets/99bf0caa-b449-4cc4-9033-f8e2445686c5" />
 
 
 
