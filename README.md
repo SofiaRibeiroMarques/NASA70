@@ -83,6 +83,8 @@ async function loadData(){
   }catch(e){console.error('Error loading data:',e)}
 }
 ```
+## Progettazione logo
+Per quanto riguarda il logo che ho realizzato, ho deciso di renderlo coerente con la narrazione del sito. Visto che all’interno del sito l’utente può “diventare” un astronauta, ho deciso di inserire i due numeri (7 e 0) all’interno di due caschi da astronauta. Non solo perché volevo associare un numero a ciascun casco, ma anche per rappresentare il fatto che, in una missione spaziale, non c’è mai un solo astronauta a bordo.
 
 ## Target e contesto d’uso
 Rispetto ai target più specifici dei singoli progetti, questo archivio si rivolge a un pubblico più ampio, grazie alla varietà dei contenuti presenti, che spaziano da siti pensati per un pubblico giovane a progetti più orientati a professionisti del settore.
