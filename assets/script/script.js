@@ -71,10 +71,10 @@ async function loadData(){
 }
 loadData();
 
-const pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list'),pagePlanet=document.getElementById('page-planet');
+const pageMap=document.getElementById('page-map'),pageList=document.getElementById('page-list');
 
 function showView(id){
-  [pageMap,pageList,pagePlanet].forEach(p=>{
+  [pageMap,pageList].forEach(p=>{
     p.classList.toggle('visible',p.id===id);
     p.classList.toggle('hidden',p.id!==id);
   });
@@ -178,10 +178,6 @@ document.querySelectorAll('.planet-hit, .sidebar-item').forEach(el=>{
   });
 });
 
-document.getElementById('back-btn').addEventListener('click', () => {
-  showView('page-list');
-});
-
 function getAllProjects(){
   return Object.entries(planets).flatMap(([k,v])=>v.projects.map(p=>({...p,planetKey:k})));
 }
@@ -263,18 +259,10 @@ function buildSearch(inputId){
         }
       }
 
-    } else if (inputId === 'search-input-planet') {
-      // FILTRO PAGINA PIANETA (Griglia Progetti)
-      const cards = document.querySelectorAll('#projects-grid .project-card');
-      cards.forEach(card => {
-        const match = !q || card.innerText.toLowerCase().includes(q);
-        card.style.display = match ? 'block' : 'none';
-      });
     }
   });
 }
 buildSearch('search-input');
-buildSearch('search-input-planet');
 
 document.addEventListener('click',e=>{
   if(!e.target.closest('.search-wrap'))
@@ -403,9 +391,9 @@ document.addEventListener('click',e=>{
         setTimeout(() => {
           screen.style.display = 'none';
           showView('page-map');
-        }, 800);
-      }, 150);
-    }, 900);
+        }, 400);
+      }, 100);
+    }, 100);
   }
 
   function tick() {
@@ -413,7 +401,7 @@ document.addEventListener('click',e=>{
     events.forEach(ev => { if (totalSec === ev.at) ev.fn(); });
     if (timerEl) timerEl.innerHTML = fmt(totalSec);
     if (totalSec <= 0) {
-      setTimeout(launch, tickDelay);
+      setTimeout(launch, Math.min(tickDelay, 300));
       return;
     }
     setTimeout(tick, tickDelay);
