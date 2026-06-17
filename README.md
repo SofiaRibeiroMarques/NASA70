@@ -15,7 +15,7 @@ L’utente viene introdotto con un breve countdown e un “liftoff”, che segna
 
 
 ## Riferimenti progettuali
-Per la parte della mappa interattiva mi sono ispirata al sito [NASA Eyes on the Solar System](https://eyes.nasa.gov/apps/solar-system/#/home), che mostra un sistema di esplorazione del sistema solare attraverso elementi interattivi e navigabili. L’obiettivo, come giä citato nel "Introduzione e tema", è stato quello di ricreare una navigazione intuitiva in cui ogni pianeta diventa un elemento cliccabile contenente i progetti legati ad esso.
+Per la parte della mappa interattiva mi sono ispirata al sito [NASA Eyes on the Solar System](https://eyes.nasa.gov/apps/solar-system/#/home), che mostra un sistema di esplorazione del sistema solare attraverso elementi interattivi e navigabili. L’obiettivo, come già citato nel "Introduzione e tema", è stato quello di ricreare una navigazione intuitiva in cui ogni pianeta diventa un elemento cliccabile contenente i progetti legati ad esso.
 
 Per la pagina dell'archivio, ho deciso di organizzare gli elementi seguendo una struttura simile alle tabelle Excel, facendo si che la visualizzazione sia il più chiaro e accessibile possibile, questo per evitare che l'utente non si perda all'interno del sito.
 
