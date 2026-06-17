@@ -489,7 +489,6 @@ svg#solar {
 .map-instructions {
   font-size: 10px;
   line-height: 1.6;
-  color: var(--fg-faint);
   margin-top: 10px;
 }
 
