@@ -220,7 +220,10 @@ function buildSearch(inputId){
       // Auto-open matching project to show image
       if (q.length >= 3) {
         for (const [key, pData] of Object.entries(planets)) {
-          const proj = pData.projects.find(p => p.title.toLowerCase().includes(q));
+          const proj = pData.projects.find(p => 
+            p.title.toLowerCase().includes(q) || 
+            p.tag.toLowerCase().includes(q)
+          );
           if (proj) {
             const row = document.querySelector(`.planet-row[data-planet="${key}"]`);
             if (row && row.style.display !== 'none') {
@@ -234,7 +237,12 @@ function buildSearch(inputId){
                 const d = row.nextElementSibling;
                 if (d && d.classList.contains('planet-drawer')) {
                   const cards = d.querySelectorAll('.project-card');
-                  const card = Array.from(cards).find(c => c.querySelector('.project-title').innerText.toLowerCase().includes(q));
+                  const card = Array.from(cards).find(c => {
+                    const title = c.querySelector('.project-title').innerText.toLowerCase();
+                    const author = c.querySelector('.project-tag').innerText.toLowerCase();
+                    // Controlla se il testo cercato è nel titolo o nell'autore del progetto trovato
+                    return title.includes(q) || author.includes(q);
+                  });
                   if (card) {
                     const projDrawer = card.nextElementSibling;
                     if (!projDrawer || !projDrawer.classList.contains('open')) {
@@ -406,3 +414,18 @@ document.addEventListener('click',e=>{
   }
   tick();
 })();
+
+// Info Modal Logic
+const infoBtns = document.querySelectorAll('.site-header .info-btn'); // Seleziona solo i bottoni 'About' nell'header
+const infoModal = document.getElementById('info-modal');
+const infoCloseElems = document.querySelectorAll('.info-close-trigger'); // Seleziona il bottone 'Close' in fondo al testo
+
+infoBtns.forEach(btn => {
+  btn.addEventListener('click', () => infoModal.classList.add('visible'));
+});
+
+infoCloseElems.forEach(el => el.addEventListener('click', () => infoModal.classList.remove('visible'))); // Gestisce la chiusura dal bottone 'Close'
+
+infoModal?.addEventListener('click', (e) => {
+  if (e.target === infoModal) infoModal.classList.remove('visible');
+});
