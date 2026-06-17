@@ -83,7 +83,6 @@ function showView(id){
 function showPlanet(key,rowEl,forceOpen=false){
   document.querySelectorAll('.planet-row').forEach(r => {
     r.style.backgroundColor = '';
-    r.style.color = '';
   });
   document.querySelectorAll('.planet-drawer').forEach(d=>{if(d.previousElementSibling!==rowEl)d.classList.remove('open')});
   if(pageList.classList.contains('hidden'))showView('page-list');
@@ -131,7 +130,7 @@ function showPlanet(key,rowEl,forceOpen=false){
   setTimeout(()=>{
     drawer.classList.add('open');
     rowEl.style.backgroundColor = 'rgba(126, 126, 126, 0.05)';
-    rowEl.style.color = '#fff';
+    // Rimosso l'impostazione del colore a bianco puro.
   },10);
 }
 
