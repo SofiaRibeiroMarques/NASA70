@@ -217,6 +217,38 @@ function buildSearch(inputId){
         cat.style.display = hasVisible ? 'block' : 'none';
       });
 
+      // Auto-open matching project to show image
+      if (q.length >= 3) {
+        for (const [key, pData] of Object.entries(planets)) {
+          const proj = pData.projects.find(p => p.title.toLowerCase().includes(q));
+          if (proj) {
+            const row = document.querySelector(`.planet-row[data-planet="${key}"]`);
+            if (row && row.style.display !== 'none') {
+              let drawer = row.nextElementSibling;
+              // Apre il pianeta se non è già aperto
+              if (!drawer || !drawer.classList.contains('open')) {
+                showPlanet(key, row, true);
+              }
+              // Attende che il contenuto del drawer sia pronto per cliccare il progetto
+              setTimeout(() => {
+                const d = row.nextElementSibling;
+                if (d && d.classList.contains('planet-drawer')) {
+                  const cards = d.querySelectorAll('.project-card');
+                  const card = Array.from(cards).find(c => c.querySelector('.project-title').innerText.toLowerCase().includes(q));
+                  if (card) {
+                    const projDrawer = card.nextElementSibling;
+                    if (!projDrawer || !projDrawer.classList.contains('open')) {
+                      toggleProjectAccordion(card, proj);
+                    }
+                  }
+                }
+              }, 200);
+              break; // Si ferma al primo match trovato
+            }
+          }
+        }
+      }
+
     } else if (inputId === 'search-input-planet') {
       // FILTRO PAGINA PIANETA (Griglia Progetti)
       const cards = document.querySelectorAll('#projects-grid .project-card');
