@@ -81,6 +81,10 @@ function showView(id){
 }
 
 function showPlanet(key,rowEl,forceOpen=false){
+  document.querySelectorAll('.planet-row').forEach(r => {
+    r.style.backgroundColor = '';
+    r.style.color = '';
+  });
   document.querySelectorAll('.planet-drawer').forEach(d=>{if(d.previousElementSibling!==rowEl)d.classList.remove('open')});
   if(pageList.classList.contains('hidden'))showView('page-list');
   let drawer=rowEl.nextElementSibling;
@@ -89,7 +93,10 @@ function showPlanet(key,rowEl,forceOpen=false){
     drawer.className='planet-drawer';
     rowEl.parentNode.insertBefore(drawer,rowEl.nextSibling);
   }
-  if(drawer.classList.contains('open')&&!forceOpen){drawer.classList.remove('open');return}
+  if(drawer.classList.contains('open')&&!forceOpen){
+    drawer.classList.remove('open');
+    return
+  }
   const d=planets[key];
   if(!d || !d.projects.length) {
     console.warn("No projects for:", key);
@@ -121,7 +128,11 @@ function showPlanet(key,rowEl,forceOpen=false){
       toggleProjectAccordion(card, proj);
     });
   });
-  setTimeout(()=>drawer.classList.add('open'),10);
+  setTimeout(()=>{
+    drawer.classList.add('open');
+    rowEl.style.backgroundColor = 'rgba(126, 126, 126, 0.05)';
+    rowEl.style.color = '#fff';
+  },10);
 }
 
 function toggleProjectAccordion(row, proj) {
