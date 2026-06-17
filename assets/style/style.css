@@ -198,7 +198,7 @@ svg#solar {
 .map-container {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex:auto;
   min-height: 0;
   position: relative;
   background: var(--bg);
@@ -289,6 +289,7 @@ svg#solar {
   opacity: 0;
   pointer-events: none;
 }
+
 
 .cd-mission-label {
   font-size: 10px;
@@ -479,6 +480,7 @@ svg#solar {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  background: none;
 }
 
 .list-intro-label {
@@ -963,15 +965,26 @@ svg#solar {
   .info-text { font-size: 16px; }
 }
 
-.site-map-intro {
+#page-map .list-intro {
   position: absolute;
   bottom: var(--spacing);
   left: var(--spacing);
-  max-width: 320px;
-  font-size: 10px;
-  line-height: 1.6;
-  color: var(--fg-faint);
+  top: 97px;
   z-index: 80;
+  padding: 0;
+  max-width: 320px;
   pointer-events: none;
-  text-align: left;
+}
+#page-map .list-intro-label {
+  font-size: 13px;
+}
+
+#page-map .map-instructions {
+  color: var(--fg-faint);
+  font-size: 10px;
+}
+
+#page-map .map-container {
+  flex: 1;
+  min-height: 0;
 }
