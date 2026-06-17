@@ -131,7 +131,6 @@ function toggleProjectAccordion(row, proj) {
     projDrawer.className = 'project-details-drawer';
     row.parentNode.insertBefore(projDrawer, row.nextSibling);
 
-    // Chiude il dettaglio quando si clicca all'interno del drawer (es. sulla foto)
     projDrawer.addEventListener('click', () => {
       projDrawer.classList.remove('open');
       row.classList.remove('active-card');
@@ -208,7 +207,6 @@ function buildSearch(inputId){
         row.style.display = match ? 'grid' : 'none';
       });
 
-      // Nascondi le categorie (Solar System, Beyond) se non hanno pianeti visibili
       categories.forEach(cat => {
         let next = cat.nextElementSibling;
         let hasVisible = false;
@@ -219,7 +217,6 @@ function buildSearch(inputId){
         cat.style.display = hasVisible ? 'block' : 'none';
       });
 
-      // Auto-open matching project to show image
       if (q.length >= 3) {
         for (const [key, pData] of Object.entries(planets)) {
           const proj = pData.projects.find(p => 
@@ -234,7 +231,6 @@ function buildSearch(inputId){
               if (!drawer || !drawer.classList.contains('open')) {
                 showPlanet(key, row, true);
               }
-              // Attende che il contenuto del drawer sia pronto per cliccare il progetto
               setTimeout(() => {
                 const d = row.nextElementSibling;
                 if (d && d.classList.contains('planet-drawer')) {
@@ -253,7 +249,7 @@ function buildSearch(inputId){
                   }
                 }
               }, 200);
-              break; // Si ferma al primo match trovato
+              break; 
             }
           }
         }
@@ -409,7 +405,6 @@ document.addEventListener('click',e=>{
   tick();
 })();
 
-// Info Modal Logic
 const infoBtns = document.querySelectorAll('.site-header .info-btn'); // Seleziona solo i bottoni 'About' nell'header
 const infoModal = document.getElementById('info-modal');
 const infoCloseElems = document.querySelectorAll('.info-close-trigger'); // Seleziona il bottone 'Close' in fondo al testo
