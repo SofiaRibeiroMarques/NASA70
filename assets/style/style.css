@@ -34,6 +34,7 @@ a, button, input, #site-logo {
 
 .visit-btn, 
 .random-project-btn, 
+.info-btn,
 #back-btn, 
 .tag-filter,
 #cd-speed-btn,
@@ -57,23 +58,29 @@ a, button, input, #site-logo {
 
 .visit-btn:hover, 
 .random-project-btn:hover, 
-#back-btn:hover, 
 .tag-filter:hover,
 #cd-speed-btn:hover,
 .tag-filter.active,
-.nasa-plus-btn:hover {
-  background: var(--fg) !important;       /* Sfondo bianco puro */
-  color: var(--bg) !important;             /* Testo scuro del background */
+.nasa-plus-btn:hover,
+#back-btn:hover { /* Aggiunto #back-btn:hover qui per coerenza */
+  background: var(--fg) !important;
+  color: var(--bg) !important;
   border-color: var(--fg) !important;
-  font-weight: 400 !important;             /* Blocca lo spessore del testo evitando l'allargamento */
+  font-weight: 400 !important;
 }
 
+.info-btn {
+  background: var(--fg) !important;
+  color: var(--bg) !important;
+  border-color: var(--fg) !important;
+}
+
+.info-btn:hover {
+  opacity: 0.8;
+}
 
 .visit-btn {
   margin-top: 0;
-}
-#back-btn {
-  flex-shrink: 0;
 }
 
 svg#solar {
@@ -412,20 +419,22 @@ svg#solar {
 
 .search-input, .planet-search-input {
   background: none;
-  border: none;
-  border-bottom: 0.5px solid var(--border-hover);
+  border: 0.5px solid var(--border-hover);
+  border-radius: 20px;
   color: var(--fg);
-  padding: 4px 0;
+  padding: 8px 16px;
+  font-size: 11px;
   width: 160px;
   outline: none;
   text-transform: none;
-  font-family: helvetica, sans-serif;
-  transition: width 0.3s ease, border-color 0.2s;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  transition: width 0.3s ease, border-color 0.2s, background 0.2s;
 }
 
 .search-input:focus, .planet-search-input:focus {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: var(--fg);
   width: 220px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .search-input::placeholder {
@@ -910,4 +919,103 @@ svg#solar {
   color: #000000;
   border-color: rgba(255, 255, 255, 0.4);
   background: rgb(255, 255, 255);
+}
+
+/* Info Modal Styles */
+.info-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.info-modal.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.info-modal-content {
+  background: var(--bg); /* Colore di sfondo coerente con il sito */
+  padding: calc(var(--spacing) * 2); /* Utilizzo della variabile per la spaziatura */
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+  position: relative;
+  border: 0.5px solid var(--border);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Assicura la coerenza del font */
+}
+
+.info-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: calc(var(--spacing) * 2); /* Utilizzo della variabile per la spaziatura */
+}
+
+.info-modal-logo {
+  height: 80px;
+  width: auto;
+}
+
+.info-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+  margin-bottom: 12px;
+}
+
+.info-title {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.2;
+
+  margin-bottom: 24px;
+  color: var(--fg);
+}
+
+.info-text {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--fg);
+  margin: 0 auto calc(var(--spacing) * 2);
+  max-width: 680px;
+  letter-spacing: 0.01em;
+}
+
+.info-credits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 40px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+@media (max-width: 600px) {
+  .info-modal-content { padding: var(--spacing); } /* Utilizzo della variabile per la spaziatura */
+  .info-text { font-size: 16px; }
+}
+
+.site-map-intro {
+  position: absolute;
+  bottom: var(--spacing);
+  left: var(--spacing);
+  max-width: 320px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--fg-faint);
+  z-index: 80;
+  pointer-events: none;
+  text-align: left;
 }
