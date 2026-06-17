@@ -27,9 +27,10 @@ Ogni pianeta o elemento spaziale rappresenta una categoria e permette di acceder
 
 Uno degli elementi centrali del progetto è proprio la mappa interattiva, che trasforma l’archivio in uno spazio esplorabile. Invece di cercare i contenuti tramite menu tradizionali, l’utente esplora il sito scegliendo direttamente una destinazione.
 
-<img width="3004" height="1594" alt="countdown" src="https://github.com/user-attachments/assets/31f8f993-afa0-45f3-80d9-93dcc35bc250" />
-<img width="3004" height="1594" alt="mappa_interattiva" src="https://github.com/user-attachments/assets/41d2add3-1455-4bd5-8821-488c6fd65f15" />
-<img width="3004" height="1594" alt="Archive" src="https://github.com/user-attachments/assets/28b39d9b-34b8-4e79-83e5-81a05c468f6b" />
+
+
+https://github.com/user-attachments/assets/7db31118-ba7b-4202-bdcb-5253506b70ca
+
 
 
 ## Tecnologia usata
