@@ -475,9 +475,9 @@ svg#solar {
 
 
 .list-intro {
-  padding: 32px var(--spacing) 0;
+  padding: 20px var(--spacing) 10px;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -486,13 +486,20 @@ svg#solar {
   font-size: 13px;
 }
 
+.map-instructions {
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--fg-faint);
+  margin-top: 10px;
+}
+
 .list-category {
-  padding: 24px var(--spacing) 8px;
+  padding: 12px var(--spacing) 8px;
   font-size: 10px;
   letter-spacing: 0.12em;
   color: var(--fg-faint);
   border-top: 0.5px solid var(--border);
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 .list-category:first-of-type {
@@ -903,7 +910,7 @@ svg#solar {
 .info-box {
   border: 1px solid #444;
   background: #0F0E0D;
-  padding: 3rem;
+  padding: 2rem;
   max-width: 800px;
   width: 100%;
   display: flex;
