@@ -59,7 +59,7 @@ a, button, #site-logo {
 .tag-filter:hover,
 .tag-filter.active,
 .nasa-plus-btn:hover,
-#back-btn:hover { /* Aggiunto #back-btn:hover qui per coerenza */
+#back-btn:hover { 
   background: var(--fg);
   color: var(--bg);
   border-color: var(--fg);
@@ -115,7 +115,6 @@ svg#solar {
   opacity: 0.4;
 }
 
-/* Forza l'opacità massima per i gruppi grafici durante l'hover */
 .planet-hit[data-planet="solarsystem"]:hover g,
 .planet-hit[data-planet="deepspace"]:hover g,
 .planet-hit[data-planet="nebula"]:hover g {
@@ -160,7 +159,6 @@ svg#solar {
   opacity: 1;
 }
 
-/* Specific overrides per icone tecniche (Solar System, Deep Space) */
 .planet-hit[data-planet="solarsystem"]:hover circle,
 .planet-hit[data-planet="deepspace"]:hover circle:not(.hit-area),
 .planet-hit[data-planet="deepspace"]:hover text {
@@ -190,16 +188,13 @@ svg#solar {
   opacity: 1;
 }
 
-/* Rimozione bordi da Deep Space e aree di clic */
 .planet-hit[data-planet="deepspace"]:hover circle,
 .hit-area {
   stroke: none;
   stroke-width: 0;
 }
 
-/* ==========================================================================
-   4. MAP SIDEBAR & NAVIGATION
-   ========================================================================== */
+
 .map-container {
   display: flex;
   flex-direction: column;
@@ -273,9 +268,7 @@ svg#solar {
   opacity: 1;
 }
 
-/* ==========================================================================
-   5. COUNTDOWN PAGE
-   ========================================================================== */
+
 #page-countdown {
   position: fixed;
   inset: 0;
@@ -333,7 +326,6 @@ svg#solar {
 
 .cd-sep {
   opacity: 0.5;
-  padding-bottom: 20px; /* Allinea i due punti alla base dei numeri */
 }
 
 .cd-label-item {
@@ -349,9 +341,7 @@ svg#solar {
   right: 24px;
 }
 
-/* ==========================================================================
-   6. LAYOUT VIEWS & HEADER
-   ========================================================================== */
+
 .page {
   position: fixed;
   inset: 0;
@@ -456,7 +446,7 @@ svg#solar {
 }
 
 .search-item {
-  padding: 12px calc(var(--spacing) / 2); /* 14px */
+  padding: 12px calc(var(--spacing) / 2); 
   border-bottom: 0.5px solid var(--border);
   cursor: var(--cur);
 }
@@ -571,7 +561,7 @@ svg#solar {
   color: var(--fg-faint);
   font-variant-numeric: tabular-nums;
   text-align: right;
-  padding-right: 16px; /* Allinea la lettera finale con il testo del bottone "Visit project" */
+  padding-right: 16px;
 }
 
 
@@ -864,7 +854,6 @@ svg#solar {
   background: rgb(255, 255, 255);
 }
 
-/* Info Modal Styles */
 .info-modal {
   position: fixed;
   inset: 0;
@@ -964,7 +953,7 @@ svg#solar {
 }
 
 @media (max-width: 600px) {
-  .info-modal-content { padding: var(--spacing); } /* Utilizzo della variabile per la spaziatura */
+  .info-modal-content { padding: var(--spacing); } 
   .info-text { font-size: 16px; }
 }
 
