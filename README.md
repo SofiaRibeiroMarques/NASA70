@@ -28,11 +28,12 @@ Ogni pianeta o elemento spaziale rappresenta una categoria e permette di acceder
 Uno degli elementi centrali del progetto è proprio la mappa interattiva, che trasforma l’archivio in uno spazio esplorabile. Invece di cercare i contenuti tramite menu tradizionali, l’utente esplora il sito scegliendo direttamente una destinazione.
 
 
-
-https://github.com/user-attachments/assets/76ad88b1-7b67-41c1-b0ed-f97d225c571c
 <img width="1511" height="846" alt="Ribeiro_Sofia_Countdown" src="https://github.com/user-attachments/assets/b44aaf38-862e-4588-8ceb-7d4e21f4cc74" />
 <img width="1511" height="846" alt="Ribeiro_Sofia_Map" src="https://github.com/user-attachments/assets/809fedc4-0014-41de-bf94-c30839efc632" />
 <img width="1511" height="846" alt="Ribeiro_Sofia__Archive" src="https://github.com/user-attachments/assets/99bf0caa-b449-4cc4-9033-f8e2445686c5" />
+
+
+https://github.com/user-attachments/assets/51127802-da7b-483b-911d-fed97a54e85e
 
 
 
