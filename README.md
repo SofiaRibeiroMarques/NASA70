@@ -29,7 +29,9 @@ Uno degli elementi centrali del progetto è proprio la mappa interattiva, che tr
 
 
 
-https://github.com/user-attachments/assets/7db31118-ba7b-4202-bdcb-5253506b70ca
+https://github.com/user-attachments/assets/76ad88b1-7b67-41c1-b0ed-f97d225c571c
+
+
 
 
 
